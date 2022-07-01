@@ -1,0 +1,10 @@
+.ingredientImage {
+  width: 480px;
+  height: 240px;
+}
+
+.ingredientNutrition {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}

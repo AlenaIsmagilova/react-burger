@@ -1,0 +1,30 @@
+.header {
+  min-height: 88px;
+  background: #1c1c21;
+}
+
+.navigation {
+  min-height: 88px;
+}
+
+.itemsList {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  min-height: 88px;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f2f2f3;
+}
+
+.logo {
+  margin-left: 132px;
+  margin-right: 312px;
+}
