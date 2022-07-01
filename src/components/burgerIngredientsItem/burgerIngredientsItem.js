@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   Counter,
@@ -29,8 +30,8 @@ const BurgerIngredientsItem = forwardRef(
           <ul className={styles.ingredientItems}>
             {filteredIngredients.map((ingredient) => (
               <li
+                key={ingredient._id}
                 className={`mb-8 ${styles.ingredientContainer}`}
-                key={ingredient.id}
                 onClick={function () {
                   handleClick(ingredient);
                 }}
@@ -57,12 +58,21 @@ const BurgerIngredientsItem = forwardRef(
             ))}
           </ul>
         </li>
-        <Modal open={modalActive} handleClose={() => setModalActive(false)}>
+        <Modal
+          title="Детали ингредиента"
+          open={modalActive}
+          handleClose={() => setModalActive(false)}
+        >
           <IngredientDetails currIngr={currentIngredient} />
         </Modal>
       </>
     );
   }
 );
+
+BurgerIngredientsItem.propTypes = {
+  filteredIngredients: PropTypes.array,
+  title: PropTypes.string,
+};
 
 export default BurgerIngredientsItem;

@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burgerIngredients.module.css";
 import BurgerIngredientsItem from "../burgerIngredientsItem/burgerIngredientsItem.js";
@@ -87,6 +88,10 @@ const BurgerIngredients = ({ ingredients }) => {
       </div>
     </section>
   );
+};
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.array,
 };
 
 export default BurgerIngredients;

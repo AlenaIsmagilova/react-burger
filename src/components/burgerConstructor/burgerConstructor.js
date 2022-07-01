@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -7,7 +8,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import bun from "../../images/bun.svg";
 import styles from "../burgerConstructor/burgerConstructor.module.css";
-import modalStyles from "../modal/modal.module.css";
 import Modal from "../modal/modal.js";
 import OrderDetails from "../orderDetails/orderDetails.js";
 
@@ -32,7 +32,7 @@ const BurgerConstructor = ({ ingredients }) => {
           thumbnail={bun}
         />
         {ingredientsIntoBurger.map((ingredient) => (
-          <>
+          <React.Fragment key={ingredient._id}>
             <span className={styles.ingredientWrapper}>
               <div className="mr-3">
                 <DragIcon type="primary" />
@@ -44,7 +44,7 @@ const BurgerConstructor = ({ ingredients }) => {
                 thumbnail={ingredient.image}
               ></ConstructorElement>
             </span>
-          </>
+          </React.Fragment>
         ))}
         <ConstructorElement
           type="bottom"
@@ -73,6 +73,10 @@ const BurgerConstructor = ({ ingredients }) => {
       </div>
     </div>
   );
+};
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.array,
 };
 
 export default BurgerConstructor;
