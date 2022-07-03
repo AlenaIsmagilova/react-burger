@@ -1,13 +1,10 @@
-import React from "react";
-
 import {
   Logo,
   BurgerIcon,
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { render } from "@testing-library/react";
-import styles from "./appHeader.module.css";
+import styles from "./AppHeader.module.css";
 
 function AppHeader() {
   return (

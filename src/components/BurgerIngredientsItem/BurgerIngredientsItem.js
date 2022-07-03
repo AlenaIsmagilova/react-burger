@@ -4,20 +4,10 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "../burgerIngredientsItem/burgerIngredientsItem.module.css";
-import Modal from "../modal/modal.js";
-import IngredientDetails from "../ingredientDetails/ingredientDetails.js";
+import styles from "../BurgerIngredientsItem/BurgerIngredientsItem.module.css";
 
 const BurgerIngredientsItem = forwardRef(
-  ({ filteredIngredients, title }, ref) => {
-    const [modalActive, setModalActive] = React.useState(false);
-    const [currentIngredient, setCurrentIngredient] = React.useState({});
-
-    const handleClick = (ingredient) => {
-      setModalActive(true);
-      setCurrentIngredient(ingredient);
-    };
-
+  ({ filteredIngredients, title, openModal }, ref) => {
     return (
       <>
         <li>
@@ -33,7 +23,8 @@ const BurgerIngredientsItem = forwardRef(
                 key={ingredient._id}
                 className={`mb-8 ${styles.ingredientContainer}`}
                 onClick={function () {
-                  handleClick(ingredient);
+                  console.log("winner");
+                  openModal(ingredient);
                 }}
               >
                 <Counter count={1} size="default" />
@@ -58,20 +49,13 @@ const BurgerIngredientsItem = forwardRef(
             ))}
           </ul>
         </li>
-        <Modal
-          title="Детали ингредиента"
-          open={modalActive}
-          handleClose={() => setModalActive(false)}
-        >
-          <IngredientDetails currIngr={currentIngredient} />
-        </Modal>
       </>
     );
   }
 );
 
 BurgerIngredientsItem.propTypes = {
-  filteredIngredients: PropTypes.array,
+  filteredIngredients: PropTypes.array.isRequired,
   title: PropTypes.string,
 };
 

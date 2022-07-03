@@ -1,4 +1,4 @@
-import styles from "../orderDetails/orderDetails.module.css";
+import styles from "../OrderDetails/OrderDetails.module.css";
 import doneOrder from "../../images/done.svg";
 
 const OrderDetails = () => {

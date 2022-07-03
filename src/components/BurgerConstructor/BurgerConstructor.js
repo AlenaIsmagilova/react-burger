@@ -7,9 +7,9 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import bun from "../../images/bun.svg";
-import styles from "../burgerConstructor/burgerConstructor.module.css";
-import Modal from "../modal/modal.js";
-import OrderDetails from "../orderDetails/orderDetails.js";
+import styles from "../BurgerConstructor/BurgerConstructor.module.css";
+import Modal from "../Modal/Modal.js";
+import OrderDetails from "../OrderDetails/OrderDetails.js";
 
 const BurgerConstructor = ({ ingredients }) => {
   const [modalActive, setModalActive] = React.useState(false);
@@ -31,21 +31,22 @@ const BurgerConstructor = ({ ingredients }) => {
           price={200}
           thumbnail={bun}
         />
-        {ingredientsIntoBurger.map((ingredient) => (
-          <React.Fragment key={ingredient._id}>
-            <span className={styles.ingredientWrapper}>
-              <div className="mr-3">
-                <DragIcon type="primary" />
-              </div>
-
-              <ConstructorElement
-                text={ingredient.name}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
-              ></ConstructorElement>
-            </span>
-          </React.Fragment>
-        ))}
+        <div className={styles.wrapperForScroll}>
+          {ingredientsIntoBurger.map((ingredient) => (
+            <React.Fragment key={ingredient._id}>
+              <span className={styles.ingredientWrapper}>
+                <div className="mr-3">
+                  <DragIcon type="primary" />
+                </div>
+                <ConstructorElement
+                  text={ingredient.name}
+                  price={ingredient.price}
+                  thumbnail={ingredient.image}
+                ></ConstructorElement>
+              </span>
+            </React.Fragment>
+          ))}
+        </div>
         <ConstructorElement
           type="bottom"
           isLocked={true}
@@ -76,7 +77,7 @@ const BurgerConstructor = ({ ingredients }) => {
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.array,
+  ingredients: PropTypes.array.isRequired,
 };
 
 export default BurgerConstructor;

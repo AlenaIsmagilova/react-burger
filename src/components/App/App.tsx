@@ -1,9 +1,9 @@
 import React from "react";
-import AppHeader from "./components/appHeader/appHeader.js";
-import BurgerIngredients from "./components/burgerIngredients/burgerIngredients.js";
-import { API, checkResponse } from "./components/api/api.js";
-import BurgerConstructor from "./components/burgerConstructor/burgerConstructor.js";
-import styles from "../src/index.module.css";
+import AppHeader from "../AppHeader/AppHeader.js";
+import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.js";
+import { API, checkResponse } from "../Api/Api.js";
+import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.js";
+import styles from "../../index.module.css";
 
 const App = () => {
   const [state, setState] = React.useState([]);
@@ -28,7 +28,7 @@ const App = () => {
       <main>
         <div className={styles.mainContainer}>
           <BurgerIngredients ingredients={state} />
-          <BurgerConstructor ingredients={state}></BurgerConstructor>
+          <BurgerConstructor ingredients={state} />
         </div>
       </main>
     </>

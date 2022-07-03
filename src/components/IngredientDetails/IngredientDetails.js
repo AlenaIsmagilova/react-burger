@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import styles from "../ingredientDetails/ingredientDetails.module.css";
+import styles from "../IngredientDetails/IngredientDetails.module.css";
 
 const IngredientDetails = (props) => {
   return (

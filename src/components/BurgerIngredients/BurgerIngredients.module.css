@@ -40,3 +40,7 @@
   margin-right: 40px;
   min-width: 600px;
 }
+
+.typeIndgredientWrapper {
+  display: flex;
+}
