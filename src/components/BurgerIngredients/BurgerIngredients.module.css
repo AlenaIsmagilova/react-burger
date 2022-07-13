@@ -1,0 +1,46 @@
+.title {
+  color: #f2f2f3;
+}
+
+.ingredientsContainer {
+  max-width: 648px;
+}
+
+.ingredientItems {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  min-width: 600px;
+}
+
+/* полоса прокрутки (скроллбар) */
+.ingredientItemsContainer::-webkit-scrollbar {
+  width: 8px; /* ширина для вертикального скролла */
+  background-color: #2f2f37;
+}
+
+/* ползунок скроллбара */
+.ingredientItemsContainer::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+
+.ingredientItemsContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #2f2f37;
+}
+
+.ingredientItemsContainer {
+  height: calc(100vh - 364px);
+
+  overflow-y: scroll;
+  margin-right: 40px;
+  min-width: 600px;
+}
+
+.typeIndgredientWrapper {
+  display: flex;
+}
