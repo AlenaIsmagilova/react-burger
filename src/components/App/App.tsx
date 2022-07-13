@@ -4,6 +4,7 @@ import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.js";
 import { API, checkResponse } from "../Api/Api.js";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.js";
 import styles from "../../index.module.css";
+import { Context } from "../Context/Context.js";
 
 const App = () => {
   const [state, setState] = React.useState([]);
@@ -25,12 +26,14 @@ const App = () => {
   return (
     <>
       <AppHeader />
-      <main>
-        <div className={styles.mainContainer}>
-          <BurgerIngredients ingredients={state} />
-          <BurgerConstructor ingredients={state} />
-        </div>
-      </main>
+      <Context.Provider value={state}>
+        <main>
+          <div className={styles.mainContainer}>
+            <BurgerIngredients />
+            <BurgerConstructor ingredients={state} />
+          </div>
+        </main>
+      </Context.Provider>
     </>
   );
 };
