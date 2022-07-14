@@ -5,7 +5,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../BurgerIngredientsItem/BurgerIngredientsItem.module.css";
-import { Context } from "../Context/Context.js";
+import { Context } from "../../services/Context.js";
 
 const BurgerIngredientsItem = forwardRef(
   ({ filteredIngredients, title, openModal }, ref) => {

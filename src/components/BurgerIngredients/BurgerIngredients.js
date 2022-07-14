@@ -5,7 +5,7 @@ import styles from "./BurgerIngredients.module.css";
 import BurgerIngredientsItem from "../BurgerIngredientsItem/BurgerIngredientsItem.js";
 import Modal from "../Modal/Modal.js";
 import IngredientDetails from "../IngredientDetails/IngredientDetails.js";
-import { Context } from "../Context/Context.js";
+import { Context } from "../../services/Context.js";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("Булки");

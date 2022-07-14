@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useEffect } from "react";
+import React, { useContext, useReducer, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
   ConstructorElement,
@@ -9,8 +9,8 @@ import {
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
 import Modal from "../Modal/Modal.js";
 import OrderDetails from "../OrderDetails/OrderDetails.js";
-import { Context } from "../Context/Context.js";
-import { createOrderApi } from "../Api/ApiOrders.js";
+import { Context } from "../../services/Context.js";
+import { createOrderApi } from "../../utils/Api/ApiOrders.js";
 
 const BurgerConstructor = () => {
   const [modalActive, setModalActive] = React.useState(false);
@@ -18,12 +18,26 @@ const BurgerConstructor = () => {
 
   const ingredients = useContext(Context);
 
-  const ingredientsIntoBurger = ingredients.filter(
-    (ingredient) => ingredient.type === "sauce" || ingredient.type === "main"
+  const prepareIngredientsId = useMemo(
+    () =>
+      ingredients.map((ingredient) => {
+        return ingredient._id;
+      }),
+    [ingredients]
   );
 
-  const bunIngredientsOnly = ingredients.filter(
-    (ingredient) => ingredient.type === "bun"
+  const ingredientsIntoBurger = useMemo(
+    () =>
+      ingredients.filter(
+        (ingredient) =>
+          ingredient.type === "sauce" || ingredient.type === "main"
+      ),
+    [ingredients]
+  );
+
+  const bunIngredientsOnly = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === "bun"),
+    [ingredients]
   );
 
   const reducer = (state, action) => {
@@ -49,28 +63,24 @@ const BurgerConstructor = () => {
     dispatch({ type: "add" });
   }, [ingredients]);
 
-  if (ingredients.length === 0) return null;
-
   const handleClose = () => {
     setModalActive(false);
   };
 
-  const prepareIngredientsId = ingredients.map((ingredient) => {
-    return ingredient._id;
-  });
-
   const handleOpen = () => {
+    setOrder("");
     setModalActive(true);
     createOrderApi(prepareIngredientsId).then((data) => {
       setOrder(data.order.number);
     });
   };
 
+  if (ingredients.length === 0) return null;
+
   return (
     <div className={`mt-25 ml-10 ${styles.mainConstructorContainer}`}>
       <div className={`ml-8 pr-2 ${styles.burgerConstructorWrapper}`}>
         <ConstructorElement
-          key={bunIngredientsOnly._id}
           type="top"
           isLocked={true}
           text={bunIngredientsOnly[1].name + " (верх)"}
@@ -78,8 +88,8 @@ const BurgerConstructor = () => {
           thumbnail={bunIngredientsOnly[1].image}
         />
         <div className={styles.wrapperForScroll}>
-          {ingredientsIntoBurger.map((ingredient) => (
-            <React.Fragment key={ingredient._id}>
+          {ingredientsIntoBurger.map((ingredient, index) => (
+            <React.Fragment key={`${index}${ingredient._id}`}>
               <span className={styles.ingredientWrapper}>
                 <div className="mr-3">
                   <DragIcon type="primary" />
@@ -94,7 +104,6 @@ const BurgerConstructor = () => {
           ))}
         </div>
         <ConstructorElement
-          key={bunIngredientsOnly._id}
           type="bottom"
           isLocked={true}
           text={bunIngredientsOnly[0].name + " (низ)"}
@@ -116,10 +125,6 @@ const BurgerConstructor = () => {
       </div>
     </div>
   );
-};
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.array.isRequired,
 };
 
 export default BurgerConstructor;
