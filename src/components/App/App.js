@@ -1,19 +1,20 @@
 import React from "react";
 import AppHeader from "../AppHeader/AppHeader.js";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.js";
-import { API, checkResponse } from "../Api/Api.js";
+import { API, checkResponse } from "../../utils/Api/Api.js";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.js";
 import styles from "../../index.module.css";
+import { Context } from "../../services/Context.js";
 
 const App = () => {
-  const [state, setState] = React.useState([]);
+  const [ingredients, setIngredients] = React.useState([]);
 
   React.useEffect(() => {
     const getBurgerData = async () => {
       try {
         const res = await fetch(API.baseUrl);
         const data = await checkResponse(res);
-        setState(data.data);
+        setIngredients(data.data);
       } catch (error) {
         console.error("error in getBurgerData", error);
       }
@@ -25,12 +26,14 @@ const App = () => {
   return (
     <>
       <AppHeader />
-      <main>
-        <div className={styles.mainContainer}>
-          <BurgerIngredients ingredients={state} />
-          <BurgerConstructor ingredients={state} />
-        </div>
-      </main>
+      <Context.Provider value={ingredients}>
+        <main>
+          <div className={styles.mainContainer}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </div>
+        </main>
+      </Context.Provider>
     </>
   );
 };

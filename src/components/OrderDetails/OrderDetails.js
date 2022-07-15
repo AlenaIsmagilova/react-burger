@@ -1,10 +1,11 @@
 import styles from "../OrderDetails/OrderDetails.module.css";
 import doneOrder from "../../images/done.svg";
+import PropTypes from "prop-types";
 
-const OrderDetails = () => {
+const OrderDetails = (props) => {
   return (
     <>
-      <p className="text text_type_digits-large mt-30 ">034536</p>
+      <p className="text text_type_digits-large mt-30 ">{props.orderNumber}</p>
       <p className="text text_type_main-medium mt-8 mb-15">
         идентификатор заказа
       </p>
@@ -17,6 +18,10 @@ const OrderDetails = () => {
       </p>
     </>
   );
+};
+
+OrderDetails.propTypes = {
+  props: PropTypes.string,
 };
 
 export default OrderDetails;

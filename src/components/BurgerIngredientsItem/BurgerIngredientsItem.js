@@ -1,10 +1,11 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useContext } from "react";
 import PropTypes from "prop-types";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../BurgerIngredientsItem/BurgerIngredientsItem.module.css";
+import { Context } from "../../services/Context.js";
 
 const BurgerIngredientsItem = forwardRef(
   ({ filteredIngredients, title, openModal }, ref) => {
