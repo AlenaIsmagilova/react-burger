@@ -1,5 +1,5 @@
-import React, { useContext, useReducer, useEffect, useMemo } from "react";
-import PropTypes from "prop-types";
+import React, { useMemo } from "react";
+import { useDrop, useDrag } from "react-dnd";
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -9,14 +9,91 @@ import {
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
 import Modal from "../Modal/Modal.js";
 import OrderDetails from "../OrderDetails/OrderDetails.js";
-import { Context } from "../../services/Context.js";
-import { createOrderApi } from "../../utils/Api/ApiOrders.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrderDetails } from "../../services/actions/actions.js";
+import {
+  RESET_ORDER_DETAILS,
+  SET_MODAL_ACTIVE,
+  SET_MODAL_INACTIVE,
+  ADD_INGREDIENT_IN_BURGER,
+  ADD_BUN_IN_BURGER,
+  DELETE_INGREDIENT_IN_BURGER,
+} from "../../services/actions/actions.js";
 
 const BurgerConstructor = () => {
-  const [modalActive, setModalActive] = React.useState(false);
-  const [order, setOrder] = React.useState(null);
+  const currentIngredientInBurger = useSelector(
+    (store) => store.burgerConstructorReducer.currentIngredientIntoBurgerItems
+  );
 
-  const ingredients = useContext(Context);
+  const currentBunInBurger = useSelector(
+    (store) => store.burgerConstructorReducer.bunInrgedientsOnly
+  );
+
+  const handleTotalPrice = () => {
+    let totalCostBuns = 0;
+    let totalCostIngredients = 0;
+
+    if (currentIngredientInBurger.length > 0) {
+      totalCostIngredients = currentIngredientInBurger.reduce(
+        (sum, current) => {
+          return sum + current.price;
+        },
+        0
+      );
+    }
+    if (currentBunInBurger._id) {
+      totalCostBuns = currentBunInBurger.price * 2;
+    }
+    return totalCostIngredients + totalCostBuns;
+  };
+
+  const totalCost = handleTotalPrice();
+
+  const [collected, dropTarget] = useDrop({
+    accept: "ingredient",
+    collect: (monitor) => {
+      return {
+        canDrop: monitor.canDrop(),
+      };
+    },
+    drop: (ingredient) => {
+      addIngredientsInBurger(ingredient);
+      addBunInBurger(ingredient);
+    },
+  });
+
+  const addIngredientsInBurger = (ingredient) => {
+    if (ingredient.type === "sauce" || ingredient.type === "main") {
+      dispatch({
+        type: ADD_INGREDIENT_IN_BURGER,
+        payload: { ...ingredient, onlyFrontId: +new Date() },
+      });
+    }
+  };
+
+  const addBunInBurger = (ingredient) => {
+    if (ingredient.type === "bun") {
+      dispatch({
+        type: ADD_BUN_IN_BURGER,
+        payload: ingredient,
+      });
+    }
+  };
+
+  const modalActive = useSelector(
+    (store) => store.burgerIngredientsReducer.isOpen
+  );
+  const dispatch = useDispatch();
+
+  const { currentIngredientIntoBurgerItems } = useSelector((store) => {
+    return store.burgerConstructorReducer;
+  });
+
+  const ingredients = useSelector(
+    (store) => store.burgerIngredientsReducer.ingredientItems
+  );
+
+  const order = useSelector((store) => store.orderDetailsReducer.orderNumber);
 
   const prepareIngredientsId = useMemo(
     () =>
@@ -26,102 +103,100 @@ const BurgerConstructor = () => {
     [ingredients]
   );
 
-  const ingredientsIntoBurger = useMemo(
-    () =>
-      ingredients.filter(
-        (ingredient) =>
-          ingredient.type === "sauce" || ingredient.type === "main"
-      ),
-    [ingredients]
-  );
-
-  const bunIngredientsOnly = useMemo(
-    () => ingredients.filter((ingredient) => ingredient.type === "bun"),
-    [ingredients]
-  );
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "add":
-        return {
-          count: [...bunIngredientsOnly, ...ingredientsIntoBurger].reduce(
-            (sum, current) => {
-              return sum + current.price;
-            },
-            0
-          ),
-        };
-      default:
-        return state;
-    }
-  };
-
-  const initialCount = { count: 0 };
-  const [state, dispatch] = useReducer(reducer, initialCount);
-
-  useEffect(() => {
-    dispatch({ type: "add" });
-  }, [ingredients]);
-
   const handleClose = () => {
-    setModalActive(false);
+    dispatch({ type: SET_MODAL_INACTIVE });
   };
 
   const handleOpen = () => {
-    setOrder("");
-    setModalActive(true);
-    createOrderApi(prepareIngredientsId).then((data) => {
-      setOrder(data.order.number);
-    });
+    dispatch({ type: RESET_ORDER_DETAILS });
+    dispatch({ type: SET_MODAL_ACTIVE });
+    dispatch(getOrderDetails(prepareIngredientsId));
   };
 
-  if (ingredients.length === 0) return null;
+  const handleDeleteIngredient = (ingredient) => {
+    dispatch({ type: DELETE_INGREDIENT_IN_BURGER, payload: ingredient });
+  };
 
   return (
     <div className={`mt-25 ml-10 ${styles.mainConstructorContainer}`}>
-      <div className={`ml-8 pr-2 ${styles.burgerConstructorWrapper}`}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={bunIngredientsOnly[1].name + " (верх)"}
-          price={bunIngredientsOnly[1].price}
-          thumbnail={bunIngredientsOnly[1].image}
-        />
-        <div className={styles.wrapperForScroll}>
-          {ingredientsIntoBurger.map((ingredient, index) => (
-            <React.Fragment key={`${index}${ingredient._id}`}>
-              <span className={styles.ingredientWrapper}>
-                <div className="mr-3">
-                  <DragIcon type="primary" />
+      <div
+        ref={dropTarget}
+        className={`${
+          collected.canDrop ? styles.burgerConstructorWrapperBorder : ""
+        } ${`ml-8 pr-2 ${styles.burgerConstructorWrapper}`}`}
+      >
+        {currentIngredientInBurger.length === 0 && !currentBunInBurger._id ? (
+          <>
+            <p
+              className={`${styles.withoutOrderTitle} text text_type_main-medium `}
+            >
+              Перетащите сюда ингредиенты.{" "}
+            </p>
+            <p
+              className={`${styles.withoutOrderTitle} text text_type_main-medium `}
+            >
+              Начните с булки.
+            </p>
+          </>
+        ) : (
+          <>
+            {currentBunInBurger._id && (
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={currentBunInBurger.name + " (верх)"}
+                price={currentBunInBurger.price}
+                thumbnail={currentBunInBurger.image}
+              />
+            )}
+            <div className={styles.wrapperForScroll}>
+              {currentIngredientIntoBurgerItems.map((ingredient, index) => (
+                <React.Fragment key={`${index}${ingredient._id}`}>
+                  <span className={styles.ingredientWrapper}>
+                    <div className="mr-3">
+                      <DragIcon type="primary" />
+                    </div>
+                    <ConstructorElement
+                      text={ingredient.name}
+                      price={ingredient.price}
+                      thumbnail={ingredient.image}
+                      handleClose={() => handleDeleteIngredient(ingredient)}
+                    ></ConstructorElement>
+                  </span>
+                </React.Fragment>
+              ))}
+            </div>
+            {currentBunInBurger._id && (
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={currentBunInBurger.name + " (низ)"}
+                price={currentBunInBurger.price}
+                thumbnail={currentBunInBurger.image}
+              />
+            )}
+            {
+              <div className={`mt-10 mr-4 ${styles.orderWrapper}`}>
+                <div className={`mr-10 ${styles.totalPriceWrapper}`}>
+                  <p className="text text_type_digits-medium mr-2">
+                    {totalCost}
+                  </p>
+                  <CurrencyIcon type="primary" />
                 </div>
-                <ConstructorElement
-                  text={ingredient.name}
-                  price={ingredient.price}
-                  thumbnail={ingredient.image}
-                ></ConstructorElement>
-              </span>
-            </React.Fragment>
-          ))}
-        </div>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={bunIngredientsOnly[0].name + " (низ)"}
-          price={bunIngredientsOnly[0].price}
-          thumbnail={bunIngredientsOnly[0].image}
-        />
-      </div>
-      <div className={`mt-10 mr-4 ${styles.orderWrapper}`}>
-        <div className={`mr-10 ${styles.totalPriceWrapper}`}>
-          <p className="text text_type_digits-medium mr-2">{state.count}</p>
-          <CurrencyIcon type="primary" />
-        </div>
-        <Button type="primary" size="large" onClick={() => handleOpen()}>
-          Оформить заказ
-        </Button>
-        <Modal open={modalActive} handleClose={handleClose}>
-          <OrderDetails orderNumber={order} />
-        </Modal>
+                <Button
+                  type="primary"
+                  size="large"
+                  onClick={() => handleOpen()}
+                >
+                  Оформить заказ
+                </Button>
+                <Modal open={modalActive} handleClose={handleClose}>
+                  <OrderDetails orderNumber={order} />
+                </Modal>
+              </div>
+            }
+          </>
+        )}
       </div>
     </div>
   );
