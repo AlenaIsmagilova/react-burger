@@ -67,7 +67,7 @@ const BurgerIngredients = () => {
 
   const bunScroll = () => bunDivEl.current.getBoundingClientRect().top;
   const mainScroll = () => mainDivEl.current.getBoundingClientRect().top;
-  const sauceScroll = () => sauceDivEl.current.getBoundingClientRect().top;
+  const sauceScroll = () => sauceDivEl.current.getBoundingClientRect().top - 30;
 
   const handleScroll = () => {
     if (tabsBlockOnScroll() > bunScroll()) {
@@ -81,7 +81,6 @@ const BurgerIngredients = () => {
       dispatch({ type: SET_NAV_INGREDIENTS, payload: "Начинки" });
     }
   };
-
   const bunIngredients = ingredients.filter(
     (ingredient) => ingredient.type === "bun"
   );

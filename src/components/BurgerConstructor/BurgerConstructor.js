@@ -157,22 +157,6 @@ const BurgerConstructor = () => {
                   index={index}
                   handleClose={() => handleDeleteIngredient(ingredient)}
                 />
-
-                // <span
-                //   key={`${index}${ingredient._id}`}
-                //   className={styles.ingredientWrapper}
-                //   ref={ref}
-                // >
-                //   <div className="mr-3">
-                //     <DragIcon type="primary" />
-                //   </div>
-                //   <ConstructorElement
-                //     text={ingredient.name}
-                //     price={ingredient.price}
-                //     thumbnail={ingredient.image}
-                //     handleClose={() => handleDeleteIngredient(ingredient)}
-                //   ></ConstructorElement>
-                // </span>
               ))}
             </div>
             {currentBunInBurger._id && (

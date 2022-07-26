@@ -1,4 +1,5 @@
-import React, { useMemo, useRef, useDispatch } from "react";
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
 import {
   ConstructorElement,
@@ -8,9 +9,9 @@ import { MOVE_INGREDIENTS } from "../../services/actions/actions.js";
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
 
 const BurgerConstructorAddedItem = ({ handleClose, index, item }) => {
-  const dispatch = useDispatch();
   const ref = useRef(null);
   const { id, name, price, image } = item;
+  const dispatch = useDispatch();
 
   const [, drop] = useDrop({
     accept: "ingredient",
@@ -20,6 +21,7 @@ const BurgerConstructorAddedItem = ({ handleClose, index, item }) => {
       }
       const dragIndex = item.index;
       const hoverIndex = index;
+
       dispatch({
         type: MOVE_INGREDIENTS,
         payload: { dragIndex, hoverIndex },
