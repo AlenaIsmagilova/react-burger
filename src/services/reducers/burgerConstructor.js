@@ -2,6 +2,7 @@ import {
   DELETE_INGREDIENT_IN_BURGER,
   ADD_INGREDIENT_IN_BURGER,
   ADD_BUN_IN_BURGER,
+  MOVE_INGREDIENTS,
 } from "../actions/actions.js";
 
 //начальное состояние
@@ -39,6 +40,19 @@ export const burgerConstructorReducer = (state = initialState, action) => {
           state.currentIngredientIntoBurgerItems.filter((ingredient) => {
             return ingredient.onlyFrontId !== action.payload.onlyFrontId;
           }),
+      };
+    }
+    case MOVE_INGREDIENTS: {
+      const dragConstructor = [...state.currentIngredientIntoBurgerItems];
+      dragConstructor.splice(
+        action.payload.dragIndex,
+        0,
+        dragConstructor.splice(action.payload.hoverIndex, 1)[0]
+      );
+
+      return {
+        ...state,
+        currentIngredientIntoBurgerItems: dragConstructor,
       };
     }
     default:

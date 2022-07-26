@@ -1,10 +1,9 @@
-import React, { useMemo } from "react";
-import { useDrop, useDrag } from "react-dnd";
+import { useMemo } from "react";
+import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
   CurrencyIcon,
   Button,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
 import Modal from "../Modal/Modal.js";
@@ -13,12 +12,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrderDetails } from "../../services/actions/actions.js";
 import {
   RESET_ORDER_DETAILS,
-  SET_MODAL_ACTIVE,
-  SET_MODAL_INACTIVE,
+  SET_ORDER_MODAL_ACTIVE,
+  SET_ORDER_MODAL_INACTIVE,
   ADD_INGREDIENT_IN_BURGER,
   ADD_BUN_IN_BURGER,
   DELETE_INGREDIENT_IN_BURGER,
 } from "../../services/actions/actions.js";
+import BurgerConstructorAddedItem from "../BurgerConstructorAddedItem/BurgerConstructorAddedItem.js";
 
 const BurgerConstructor = () => {
   const currentIngredientInBurger = useSelector(
@@ -80,8 +80,8 @@ const BurgerConstructor = () => {
     }
   };
 
-  const modalActive = useSelector(
-    (store) => store.burgerIngredientsReducer.isOpen
+  const orderModalActive = useSelector(
+    (store) => store.burgerIngredientsReducer.isOrderModalOpen
   );
   const dispatch = useDispatch();
 
@@ -104,12 +104,12 @@ const BurgerConstructor = () => {
   );
 
   const handleClose = () => {
-    dispatch({ type: SET_MODAL_INACTIVE });
+    dispatch({ type: SET_ORDER_MODAL_INACTIVE });
   };
 
   const handleOpen = () => {
     dispatch({ type: RESET_ORDER_DETAILS });
-    dispatch({ type: SET_MODAL_ACTIVE });
+    dispatch({ type: SET_ORDER_MODAL_ACTIVE });
     dispatch(getOrderDetails(prepareIngredientsId));
   };
 
@@ -151,19 +151,28 @@ const BurgerConstructor = () => {
             )}
             <div className={styles.wrapperForScroll}>
               {currentIngredientIntoBurgerItems.map((ingredient, index) => (
-                <React.Fragment key={`${index}${ingredient._id}`}>
-                  <span className={styles.ingredientWrapper}>
-                    <div className="mr-3">
-                      <DragIcon type="primary" />
-                    </div>
-                    <ConstructorElement
-                      text={ingredient.name}
-                      price={ingredient.price}
-                      thumbnail={ingredient.image}
-                      handleClose={() => handleDeleteIngredient(ingredient)}
-                    ></ConstructorElement>
-                  </span>
-                </React.Fragment>
+                <BurgerConstructorAddedItem
+                  key={`${index}${ingredient._id}`}
+                  item={ingredient}
+                  index={index}
+                  handleClose={() => handleDeleteIngredient(ingredient)}
+                />
+
+                // <span
+                //   key={`${index}${ingredient._id}`}
+                //   className={styles.ingredientWrapper}
+                //   ref={ref}
+                // >
+                //   <div className="mr-3">
+                //     <DragIcon type="primary" />
+                //   </div>
+                //   <ConstructorElement
+                //     text={ingredient.name}
+                //     price={ingredient.price}
+                //     thumbnail={ingredient.image}
+                //     handleClose={() => handleDeleteIngredient(ingredient)}
+                //   ></ConstructorElement>
+                // </span>
               ))}
             </div>
             {currentBunInBurger._id && (
@@ -190,7 +199,7 @@ const BurgerConstructor = () => {
                 >
                   Оформить заказ
                 </Button>
-                <Modal open={modalActive} handleClose={handleClose}>
+                <Modal open={orderModalActive} handleClose={handleClose}>
                   <OrderDetails orderNumber={order} />
                 </Modal>
               </div>

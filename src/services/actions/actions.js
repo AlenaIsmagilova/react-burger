@@ -19,13 +19,17 @@ export const RESET_INGREDIENTS_ITEM_IN_MODAL =
 
 export const SET_NAV_INGREDIENTS = "SET_NAV_INGREDIENTS";
 
-export const SET_MODAL_ACTIVE = "SET_MODAL_ACTIVE";
-export const SET_MODAL_INACTIVE = "SET_MODAL_INACTIVE";
+export const SET_ORDER_MODAL_ACTIVE = "SET_ORDER_MODAL_ACTIVE";
+export const SET_INGREDIENTS_MODAL_ACTIVE = "SET_INGREDIENTS_MODAL_ACTIVE";
+export const SET_ORDER_MODAL_INACTIVE = "SET_ORDER_MODAL_INACTIVE";
+export const SET_INGREDIENTS_MODAL_INACTIVE = "SET_INGREDIENTS_MODAL_INACTIVE";
 
 export const ADD_INGREDIENT_IN_BURGER = "ADD_INGREDIENT_IN_BURGER";
 export const ADD_BUN_IN_BURGER = "ADD_BUN_IN_BURGER";
 
 export const DELETE_INGREDIENT_IN_BURGER = "DELETE_INGREDIENT_IN_BURGER";
+
+export const MOVE_INGREDIENTS = "MOVE_INGREDIENTS";
 
 //санки(фишка санок в том, что он не возвращает объект экшенов, а возвращает функцию,
 //в аргументе которой диспатч - это дает возможность диспатчить экшены(объекты) в разных местах. при запросе/ошибке/при ответе)

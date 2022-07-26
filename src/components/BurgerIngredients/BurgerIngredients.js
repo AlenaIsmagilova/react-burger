@@ -8,8 +8,8 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails.js";
 import {
   SET_INGREDIENTS_ITEM_IN_MODAL,
   SET_NAV_INGREDIENTS,
-  SET_MODAL_ACTIVE,
-  SET_MODAL_INACTIVE,
+  SET_INGREDIENTS_MODAL_ACTIVE,
+  SET_INGREDIENTS_MODAL_INACTIVE,
 } from "../../services/actions/actions";
 
 const BurgerIngredients = () => {
@@ -27,7 +27,7 @@ const BurgerIngredients = () => {
   );
 
   const modalActive = useSelector(
-    (store) => store.burgerIngredientsReducer.isOpen
+    (store) => store.burgerIngredientsReducer.isIngredientsModalOpen
   );
 
   const sauceDivEl = useRef(null);
@@ -35,7 +35,7 @@ const BurgerIngredients = () => {
   const mainDivEl = useRef(null);
 
   const handleOpenModal = (ingredient) => {
-    dispatch({ type: SET_MODAL_ACTIVE });
+    dispatch({ type: SET_INGREDIENTS_MODAL_ACTIVE });
     dispatch({ type: SET_INGREDIENTS_ITEM_IN_MODAL, payload: ingredient });
   };
 
@@ -143,7 +143,7 @@ const BurgerIngredients = () => {
       <Modal
         title="Детали ингредиента"
         open={modalActive}
-        handleClose={() => dispatch({ type: SET_MODAL_INACTIVE })}
+        handleClose={() => dispatch({ type: SET_INGREDIENTS_MODAL_INACTIVE })}
       >
         <IngredientDetails currIngr={currentIngredient} />
       </Modal>

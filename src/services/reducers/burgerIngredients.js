@@ -3,8 +3,10 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
   SET_NAV_INGREDIENTS,
-  SET_MODAL_ACTIVE,
-  SET_MODAL_INACTIVE,
+  SET_ORDER_MODAL_ACTIVE,
+  SET_INGREDIENTS_MODAL_ACTIVE,
+  SET_ORDER_MODAL_INACTIVE,
+  SET_INGREDIENTS_MODAL_INACTIVE,
 } from "../actions/actions.js";
 
 //начальное состояние
@@ -13,7 +15,8 @@ export const initialState = {
   isLoading: false,
   error: false,
   currentIngredients: "Булки",
-  isOpen: false,
+  isOrderModalOpen: false,
+  isIngredientsModalOpen: false,
 };
 
 // редьюсер, который возвращает обновленный стейт, принимая на вход стейт и экшн
@@ -45,16 +48,28 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
         currentIngredients: action.payload,
       };
     }
-    case SET_MODAL_ACTIVE: {
+    case SET_ORDER_MODAL_ACTIVE: {
       return {
         ...state,
-        isOpen: true,
+        isOrderModalOpen: true,
       };
     }
-    case SET_MODAL_INACTIVE: {
+    case SET_INGREDIENTS_MODAL_ACTIVE: {
       return {
         ...state,
-        isOpen: false,
+        isIngredientsModalOpen: true,
+      };
+    }
+    case SET_ORDER_MODAL_INACTIVE: {
+      return {
+        ...state,
+        isOrderModalOpen: false,
+      };
+    }
+    case SET_INGREDIENTS_MODAL_INACTIVE: {
+      return {
+        ...state,
+        isIngredientsModalOpen: false,
       };
     }
     default:
