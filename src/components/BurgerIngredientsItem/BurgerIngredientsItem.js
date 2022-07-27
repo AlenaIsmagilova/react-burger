@@ -17,7 +17,7 @@ const BurgerIngredientsItem = forwardRef(
           <ul className={styles.ingredientItems}>
             {filteredIngredients.map((ingredient, index) => (
               <BurgerIngredientCard
-                key={ingredient.onlyFrontId}
+                key={ingredient._id}
                 ingredient={ingredient}
                 openModal={openModal}
               />

@@ -6,7 +6,7 @@ import {
 } from "../actions/actions";
 
 const initialState = {
-  orderNumber: "",
+  orderNumber: 0,
   isLoading: false,
   error: false,
 };
@@ -36,7 +36,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
     case RESET_ORDER_DETAILS: {
       return {
         ...state,
-        orderNumber: "",
+        orderNumber: 0,
       };
     }
     default:
