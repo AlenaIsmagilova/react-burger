@@ -1,4 +1,5 @@
 import styles from "../BurgerIngredientsItem/BurgerIngredientsItem.module.css";
+import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import {
@@ -67,6 +68,11 @@ const BurgerIngredientCard = ({ ingredient, openModal }) => {
       </h3>
     </li>
   );
+};
+
+BurgerIngredientCard.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+  openModal: PropTypes.func,
 };
 
 export default BurgerIngredientCard;

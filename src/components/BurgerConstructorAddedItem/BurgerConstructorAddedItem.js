@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useDrop, useDrag } from "react-dnd";
 import {
@@ -57,6 +58,12 @@ const BurgerConstructorAddedItem = ({ handleClose, index, item }) => {
       </span>
     </>
   );
+};
+
+BurgerConstructorAddedItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number,
+  handleClose: PropTypes.func,
 };
 
 export default BurgerConstructorAddedItem;

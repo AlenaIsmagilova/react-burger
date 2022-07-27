@@ -1,5 +1,7 @@
+import { baseUrl } from "../../constants/constants";
+
 export const API = {
-  baseUrl: "https://norma.nomoreparties.space/api/ingredients",
+  baseUrl: baseUrl,
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,12 +15,8 @@ export function checkResponse(res) {
 }
 
 export const getBurgerData = async () => {
-  try {
-    const res = await fetch(API.baseUrl);
-    const data = await checkResponse(res);
+  const res = await fetch(`${API.baseUrl}ingredients`);
+  const data = await checkResponse(res);
 
-    return data;
-  } catch (error) {
-    console.error("error in getBurgerData", error);
-  }
+  return data;
 };

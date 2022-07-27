@@ -3,6 +3,7 @@ import {
   ADD_INGREDIENT_IN_BURGER,
   ADD_BUN_IN_BURGER,
   MOVE_INGREDIENTS,
+  RESET_CONSTRUCTOR_AFTER_ORDER,
 } from "../actions/actions.js";
 
 //начальное состояние
@@ -54,6 +55,9 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         currentIngredientIntoBurgerItems: dragConstructor,
       };
+    }
+    case RESET_CONSTRUCTOR_AFTER_ORDER: {
+      return initialState;
     }
     default:
       return state;

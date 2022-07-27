@@ -26,6 +26,7 @@ export const SET_INGREDIENTS_MODAL_INACTIVE = "SET_INGREDIENTS_MODAL_INACTIVE";
 
 export const ADD_INGREDIENT_IN_BURGER = "ADD_INGREDIENT_IN_BURGER";
 export const ADD_BUN_IN_BURGER = "ADD_BUN_IN_BURGER";
+export const RESET_CONSTRUCTOR_AFTER_ORDER = "RESET_CONSTRUCTOR_AFTER_ORDER";
 
 export const DELETE_INGREDIENT_IN_BURGER = "DELETE_INGREDIENT_IN_BURGER";
 
@@ -45,7 +46,8 @@ export const getBurgerIngredientsItems = (ingredients) => {
           ingredientItems: res.data,
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error("Error in getBurgerData", error);
         dispatch({
           type: GET_INGREDIENTS_FAILED,
         });
@@ -60,13 +62,13 @@ export const getOrderDetails = (ingredientsId) => {
     });
     createOrderApi(ingredientsId)
       .then((res) => {
-        console.log(res.order);
         dispatch({
           type: GET_ORDER_DETAILS_SUCCESS,
           payload: res.order.number,
         });
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error("Error in createOrderApi", error);
         dispatch({
           type: GET_ORDER_DETAILS_FAILED,
         });

@@ -17,6 +17,7 @@ import {
   ADD_INGREDIENT_IN_BURGER,
   ADD_BUN_IN_BURGER,
   DELETE_INGREDIENT_IN_BURGER,
+  RESET_CONSTRUCTOR_AFTER_ORDER,
 } from "../../services/actions/actions.js";
 import BurgerConstructorAddedItem from "../BurgerConstructorAddedItem/BurgerConstructorAddedItem.js";
 
@@ -105,6 +106,7 @@ const BurgerConstructor = () => {
 
   const handleClose = () => {
     dispatch({ type: SET_ORDER_MODAL_INACTIVE });
+    dispatch({ type: RESET_CONSTRUCTOR_AFTER_ORDER });
   };
 
   const handleOpen = () => {
@@ -152,7 +154,7 @@ const BurgerConstructor = () => {
             <div className={styles.wrapperForScroll}>
               {currentIngredientIntoBurgerItems.map((ingredient, index) => (
                 <BurgerConstructorAddedItem
-                  key={`${index}${ingredient._id}`}
+                  key={ingredient.onlyFrontId}
                   item={ingredient}
                   index={index}
                   handleClose={() => handleDeleteIngredient(ingredient)}
