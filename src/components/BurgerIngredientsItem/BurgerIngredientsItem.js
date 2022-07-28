@@ -1,11 +1,7 @@
-import React, { forwardRef, useContext } from "react";
+import { forwardRef } from "react";
 import PropTypes from "prop-types";
-import {
-  CurrencyIcon,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../BurgerIngredientsItem/BurgerIngredientsItem.module.css";
-import { Context } from "../../services/Context.js";
+import BurgerIngredientCard from "../BurgerIngredientCard/BurgerIngredientCard.js";
 
 const BurgerIngredientsItem = forwardRef(
   ({ filteredIngredients, title, openModal }, ref) => {
@@ -19,34 +15,12 @@ const BurgerIngredientsItem = forwardRef(
             {title}
           </h2>
           <ul className={styles.ingredientItems}>
-            {filteredIngredients.map((ingredient) => (
-              <li
+            {filteredIngredients.map((ingredient, index) => (
+              <BurgerIngredientCard
                 key={ingredient._id}
-                className={`mb-8 ${styles.ingredientContainer}`}
-                onClick={function () {
-                  console.log("winner");
-                  openModal(ingredient);
-                }}
-              >
-                <Counter count={1} size="default" />
-                <img
-                  className={`ml-4 ${styles.burgerIngredientsItemImage}`}
-                  src={ingredient.image}
-                  alt={ingredient.name}
-                />
-                <div className={styles.priceWrapper}>
-                  <p className="mt-1 mb-1 mr-2 text text_type_digits-default">
-                    {ingredient.price}
-                  </p>
-                  <CurrencyIcon type="primary" />
-                </div>
-
-                <h3
-                  className={`text text_type_main-small ${styles.ingredientName}`}
-                >
-                  {ingredient.name}
-                </h3>
-              </li>
+                ingredient={ingredient}
+                openModal={openModal}
+              />
             ))}
           </ul>
         </li>
@@ -58,6 +32,7 @@ const BurgerIngredientsItem = forwardRef(
 BurgerIngredientsItem.propTypes = {
   filteredIngredients: PropTypes.array.isRequired,
   title: PropTypes.string,
+  openModal: PropTypes.func,
 };
 
 export default BurgerIngredientsItem;

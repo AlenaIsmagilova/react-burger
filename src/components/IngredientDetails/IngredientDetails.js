@@ -54,14 +54,13 @@ const IngredientDetails = (props) => {
 };
 
 IngredientDetails.propTypes = {
-  image: PropTypes.string,
-  name: PropTypes.string,
-
   currIngr: PropTypes.shape({
     carbohydrates: PropTypes.number,
     fat: PropTypes.number,
     proteins: PropTypes.number,
     calories: PropTypes.number,
+    name: PropTypes.string,
+    image: PropTypes.string,
   }),
 };
 

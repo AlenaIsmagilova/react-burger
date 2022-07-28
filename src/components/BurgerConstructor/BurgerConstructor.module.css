@@ -17,6 +17,12 @@
   /* height: calc(100vh - 292px); */
   align-items: flex-end;
   gap: 10px;
+  height: 100%;
+  justify-content: center;
+}
+
+.burgerConstructorWrapperBorder {
+  border: grey dashed 2px;
 }
 
 .ingredientWrapper {
@@ -26,7 +32,7 @@
 }
 
 .wrapperForScroll {
-  height: calc(100vh - 472px);
+  height: calc(100vh - 497px);
   overflow-y: scroll;
   width: 100%;
   display: flex;
@@ -59,4 +65,10 @@
 .burgerElementWrapper {
   display: flex;
   flex-direction: column;
+}
+
+.withoutOrderTitle {
+  margin: 0;
+  align-self: center;
+  text-align: center;
 }

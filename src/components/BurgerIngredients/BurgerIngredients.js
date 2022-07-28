@@ -1,50 +1,86 @@
-import { useRef, useState, useContext } from "react";
-import PropTypes from "prop-types";
+import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import BurgerIngredientsItem from "../BurgerIngredientsItem/BurgerIngredientsItem.js";
 import Modal from "../Modal/Modal.js";
 import IngredientDetails from "../IngredientDetails/IngredientDetails.js";
-import { Context } from "../../services/Context.js";
+import {
+  SET_INGREDIENTS_ITEM_IN_MODAL,
+  SET_NAV_INGREDIENTS,
+  SET_INGREDIENTS_MODAL_ACTIVE,
+  SET_INGREDIENTS_MODAL_INACTIVE,
+} from "../../services/actions/actions";
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState("Булки");
+  const dispatch = useDispatch();
 
-  const ingredients = useContext(Context);
+  const ingredients = useSelector(
+    (store) => store.burgerIngredientsReducer.ingredientItems
+  );
+  const currentIngredient = useSelector(
+    (store) => store.ingredientsItemReducer.currentIngredient
+  );
 
-  const [modalActive, setModalActive] = useState(false);
-  const [currentIngredient, setCurrentIngredient] = useState({});
+  const current = useSelector(
+    (store) => store.burgerIngredientsReducer.currentIngredients
+  );
+
+  const modalActive = useSelector(
+    (store) => store.burgerIngredientsReducer.isIngredientsModalOpen
+  );
 
   const sauceDivEl = useRef(null);
   const bunDivEl = useRef(null);
   const mainDivEl = useRef(null);
 
   const handleOpenModal = (ingredient) => {
-    setModalActive(true);
-    setCurrentIngredient(ingredient);
+    dispatch({ type: SET_INGREDIENTS_MODAL_ACTIVE });
+    dispatch({ type: SET_INGREDIENTS_ITEM_IN_MODAL, payload: ingredient });
   };
 
   const onSauceTabClick = (value) => {
-    setCurrent(value);
+    dispatch({ type: SET_NAV_INGREDIENTS, payload: value });
     if (value === "Соусы") {
       sauceDivEl.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const onBunTabClick = (value) => {
-    setCurrent(value);
+    dispatch({ type: SET_NAV_INGREDIENTS, payload: value });
     if (value === "Булки") {
       bunDivEl.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const onMainTabClick = (value) => {
-    setCurrent(value);
+    dispatch({ type: SET_NAV_INGREDIENTS, payload: value });
     if (value === "Начинки") {
       mainDivEl.current.scrollIntoView({ behavior: "smooth" });
     }
   };
 
+  const tabsBlockEl = useRef(null);
+
+  const tabsBlockOnScroll = () =>
+    tabsBlockEl.current.getBoundingClientRect().bottom;
+
+  const bunScroll = () => bunDivEl.current.getBoundingClientRect().top;
+  const mainScroll = () => mainDivEl.current.getBoundingClientRect().top;
+  const sauceScroll = () => sauceDivEl.current.getBoundingClientRect().top - 30;
+
+  const handleScroll = () => {
+    if (tabsBlockOnScroll() > bunScroll()) {
+      dispatch({ type: SET_NAV_INGREDIENTS, payload: "Булки" });
+    }
+
+    if (tabsBlockOnScroll() > sauceScroll()) {
+      dispatch({ type: SET_NAV_INGREDIENTS, payload: "Соусы" });
+    }
+    if (tabsBlockOnScroll() > mainScroll()) {
+      dispatch({ type: SET_NAV_INGREDIENTS, payload: "Начинки" });
+    }
+  };
   const bunIngredients = ingredients.filter(
     (ingredient) => ingredient.type === "bun"
   );
@@ -62,7 +98,7 @@ const BurgerIngredients = () => {
       <h1 className={`${styles.title} text text_type_main-large mt-10 mb-5`}>
         Соберите бургер
       </h1>
-      <div className={styles.typeIndgredientWrapper}>
+      <div ref={tabsBlockEl} className={styles.typeIndgredientWrapper}>
         <Tab value="Булки" active={current === "Булки"} onClick={onBunTabClick}>
           Булки
         </Tab>
@@ -81,7 +117,7 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-      <div className={styles.ingredientItemsContainer}>
+      <div className={styles.ingredientItemsContainer} onScroll={handleScroll}>
         <ul className={styles.ingredientItems}>
           <BurgerIngredientsItem
             filteredIngredients={bunIngredients}
@@ -106,16 +142,12 @@ const BurgerIngredients = () => {
       <Modal
         title="Детали ингредиента"
         open={modalActive}
-        handleClose={() => setModalActive(false)}
+        handleClose={() => dispatch({ type: SET_INGREDIENTS_MODAL_INACTIVE })}
       >
         <IngredientDetails currIngr={currentIngredient} />
       </Modal>
     </section>
   );
 };
-
-// BurgerIngredients.propTypes = {
-//   ingredients: PropTypes.array.isRequired,
-// };
 
 export default BurgerIngredients;
