@@ -3,7 +3,7 @@ import {
   GET_ORDER_DETAILS_SUCCESS,
   GET_ORDER_DETAILS_FAILED,
   RESET_ORDER_DETAILS,
-} from "../actions/actions";
+} from "../actions/actions.js";
 
 const initialState = {
   orderNumber: 0,
