@@ -4,12 +4,12 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styles from "./AppHeader.module.css";
 
 function AppHeader() {
-  const { pathname } = useLocation();
-  console.log(pathname);
+  // const { pathname } = useLocation();
+  // console.log(pathname);
   return (
     <header className={styles.header}>
       <nav className={styles.navigation}>
