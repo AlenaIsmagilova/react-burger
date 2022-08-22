@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useDrop } from "react-dnd";
+import { Redirect, useHistory } from "react-router-dom";
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -22,6 +23,7 @@ import {
 import BurgerConstructorAddedItem from "../BurgerConstructorAddedItem/BurgerConstructorAddedItem.js";
 
 const BurgerConstructor = () => {
+  const history = useHistory();
   const currentIngredientInBurger = useSelector(
     (store) => store.burgerConstructorReducer.currentIngredientIntoBurgerItems
   );
@@ -29,6 +31,8 @@ const BurgerConstructor = () => {
   const currentBunInBurger = useSelector(
     (store) => store.burgerConstructorReducer.bunInrgedientsOnly
   );
+
+  const userIsLogedIn = useSelector((store) => store.userReducer.isLogedIn);
 
   const handleTotalPrice = () => {
     let totalCostBuns = 0;
@@ -110,9 +114,13 @@ const BurgerConstructor = () => {
   };
 
   const handleOpen = () => {
-    dispatch({ type: RESET_ORDER_DETAILS });
-    dispatch({ type: SET_ORDER_MODAL_ACTIVE });
-    dispatch(getOrderDetails(prepareIngredientsId));
+    if (userIsLogedIn) {
+      dispatch({ type: RESET_ORDER_DETAILS });
+      dispatch({ type: SET_ORDER_MODAL_ACTIVE });
+      dispatch(getOrderDetails(prepareIngredientsId));
+    } else {
+      return history.push("/login");
+    }
   };
 
   const handleDeleteIngredient = (ingredient) => {
