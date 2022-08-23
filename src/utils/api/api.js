@@ -24,7 +24,7 @@ export const getBurgerData = async () => {
 };
 
 export const forgotPassword = (email) => {
-  return fetch("https://norma.nomoreparties.space/api/password-reset", {
+  return fetch(`${API.baseUrl}password-reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const forgotPassword = (email) => {
 };
 
 export const resetPassword = (form) => {
-  return fetch("https://norma.nomoreparties.space/api/password-reset/reset", {
+  return fetch(`${API.baseUrl}password-reset/reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export const resetPassword = (form) => {
 };
 
 export const signUpApi = (form) => {
-  return fetch("https://norma.nomoreparties.space/api/auth/register", {
+  return fetch(`${API.baseUrl}auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export const signUpApi = (form) => {
 };
 
 export const signInApi = (form) => {
-  return fetch("https://norma.nomoreparties.space/api/auth/login", {
+  return fetch(`${API.baseUrl}auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export const signInApi = (form) => {
 };
 
 export const getUser = () => {
-  return fetch("https://norma.nomoreparties.space/api/auth/user", {
+  return fetch(`${API.baseUrl}auth/user`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export const getUser = () => {
 };
 
 export const logOutApi = (refreshToken) => {
-  return fetch("https://norma.nomoreparties.space/api/auth/logout", {
+  return fetch(`${API.baseUrl}auth/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export const logOutApi = (refreshToken) => {
 };
 
 export const updateTokenApi = () => {
-  return fetch("https://norma.nomoreparties.space/api/auth/token", {
+  return fetch(`${API.baseUrl}auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -108,7 +108,7 @@ export const updateTokenApi = () => {
 };
 
 export const updateUserApi = (form) => {
-  return fetch("https://norma.nomoreparties.space/api/auth/user", {
+  return fetch(`${API.baseUrl}auth/user`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

@@ -8,8 +8,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import styles from "./AppHeader.module.css";
 
 function AppHeader() {
-  // const { pathname } = useLocation();
-  // console.log(pathname);
+  const location = useLocation();
   return (
     <header className={styles.header}>
       <nav className={styles.navigation}>
@@ -17,17 +16,16 @@ function AppHeader() {
           <NavLink
             exact
             to="/"
-            style={(isActive) => ({
-              color: isActive ? "#f2f2f3" : "#8585ad",
-            })}
-            // to="/"
-            // className={pathname === "/" ? styles.activeLink : styles.link}
+            className={styles.link}
+            activeClassName={styles.activeLink}
           >
             <li
               className={`pl-5 pt-4 pr-2 pb-4 ${styles.item} text text_type_main-small`}
             >
               <div className="mr-2">
-                <BurgerIcon type="primary" />
+                <BurgerIcon
+                  type={location.pathname === "/" ? "primary" : "secondary"}
+                />
               </div>
               Конструктор
             </li>
@@ -35,46 +33,41 @@ function AppHeader() {
           <NavLink
             exact
             to="/feed"
-            style={(isActive) => ({
-              color: isActive ? "#f2f2f3" : "#8585ad",
-            })}
-            // to="/feed"
-            // style={(isActive) => {
-            //   console.log(isActive);
-            //   return {
-            //     color: isActive ? "#f2f2f3" : "#8585ad",
-            //   };
-            // }}
-            // className={styles.link}
-            // activeClassName={styles.activeLink}
+            className={styles.link}
+            activeClassName={styles.activeLink}
           >
             <li
               className={`pl-5 pt-4 pr-2 pb-4 ${styles.item} text text_type_main-small`}
             >
               <div className="mr-2">
-                <ListIcon type="secondary" />
+                <ListIcon
+                  type={location.pathname === "/feed" ? "primary" : "secondary"}
+                />
               </div>
               Лента заказов
             </li>
           </NavLink>
-
           <li className={styles.logo}>
             <Logo></Logo>
           </li>
           <NavLink
-            exact
             to="/profile"
-            style={(isActive) => ({
-              color: isActive ? "#f2f2f3" : "#8585ad",
-            })}
-            // className={styles.link}
-            // className={isActive ? styles.activeLink : ""}
+            exact
+            className={styles.link}
+            activeClassName={styles.activeLink}
           >
             <li
               className={`pl-5 pt-4 pr-2 pb-4 ${styles.item} text text_type_main-small`}
             >
               <div className="mr-2">
-                <ProfileIcon type="secondary" />
+                <ProfileIcon
+                  type={
+                    location.pathname === "/profile" ||
+                    location.pathname === "/profile/orders"
+                      ? "primary"
+                      : "secondary"
+                  }
+                />
               </div>
               Личный кабинет
             </li>

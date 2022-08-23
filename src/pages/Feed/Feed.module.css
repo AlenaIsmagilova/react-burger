@@ -1,0 +1,41 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.ordersContainer {
+  display: flex;
+}
+
+.containersWrapper {
+  display: flex;
+}
+
+.cardItem {
+  list-style-type: none;
+}
+
+.statsContainer {
+  min-width: 580px;
+}
+
+.ordersContainer {
+  min-width: 608px;
+}
+
+.title {
+  text-align: start;
+}
+
+.totalCount {
+  display: flex;
+}
+
+.orderIdWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardsList {
+  width: 100%;
+}

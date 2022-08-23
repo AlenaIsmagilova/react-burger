@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styles from "../IngredientDetails/IngredientDetails.module.css";
 
 const IngredientDetails = () => {
@@ -17,9 +17,6 @@ const IngredientDetails = () => {
 
   return (
     <div className={styles.ingredientContainer}>
-      {/* <h2 className={`text text_type_main-large ${styles.title}`}>
-        Детали ингредиента
-      </h2> */}
       <img className={styles.ingredientImage} src={currIngr.image} />
       <p className="mt-4 text text_type_main-medium">{currIngr.name}</p>
       <div className={`mt-8 mb-15 ${styles.ingredientNutrition}`}>

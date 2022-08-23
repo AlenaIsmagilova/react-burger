@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logOut, updateUser } from "../../services/actions/authActions";
 import { deleteCookie } from "../../utils/helpers";
 import styles from "../Profile/Profile.module.css";
@@ -15,6 +15,15 @@ const Profile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const refreshToken = useSelector((store) => store.userReducer.refreshToken);
+  const isLogedIn = useSelector((store) => store.userReducer.isLogedIn);
+  const name = useSelector((store) => store.userReducer.currentUser.name);
+  const email = useSelector((store) => store.userReducer.currentUser.email);
+
+  useEffect(() => {
+    if (isLogedIn) {
+      setValue({ ...form, name, email });
+    }
+  }, [isLogedIn]);
 
   const onClick = (e) => {
     e.preventDefault();
@@ -34,11 +43,17 @@ const Profile = () => {
     dispatch(updateUser(form));
   };
 
+  const handleResetForm = (e) => {
+    e.preventDefault();
+    setValue({ ...form, name, email });
+  };
+
   return (
     <>
       <div className={styles.mainContainer}>
         <div className={`${styles.navLinkContainer} mr-15`}>
           <NavLink
+            exact
             to="/profile"
             className={`${styles.navProfile} text text_type_main-small`}
             activeClassName={styles.activeNavProfile}
@@ -47,6 +62,7 @@ const Profile = () => {
           </NavLink>
 
           <NavLink
+            exact
             to="/profile/orders"
             className={`${styles.navProfile} text text_type_main-small`}
             activeClassName={styles.activeNavProfile}
@@ -54,6 +70,7 @@ const Profile = () => {
             История заказов
           </NavLink>
           <NavLink
+            exact
             to="/profile/exit"
             className={`${styles.navProfile} text text_type_main-small mb-20`}
             activeClassName={styles.activeNavProfile}
@@ -68,6 +85,7 @@ const Profile = () => {
         <div className={styles.formContainer}>
           <div className="inputWrapper mb-6">
             <Input
+              type={"text"}
               value={form.name}
               name="name"
               onChange={handleChange}
@@ -84,6 +102,7 @@ const Profile = () => {
           </div>
           <div className="mb-6 inputWrapper">
             <Input
+              type={"password"}
               value={form.password}
               name="password"
               onChange={handleChange}
@@ -91,9 +110,8 @@ const Profile = () => {
               icon={"EditIcon"}
             />
           </div>
-
           <div className={styles.buttonsContainer}>
-            <Button type="secondary" size="small">
+            <Button type="secondary" size="small" onClick={handleResetForm}>
               Отмена
             </Button>
             <Button type="primary" size="small" onClick={onSaveClick}>

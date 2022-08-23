@@ -24,6 +24,8 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import IngredientDetails from "../IngredientDetails/IngredientDetails.js";
 import Modal from "../Modal/Modal.js";
 import { SET_INGREDIENTS_MODAL_INACTIVE } from "../../services/actions/actions";
+import Feed from "../../pages/Feed/Feed.js";
+import Orders from "../../pages/Profile/Orders.js";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -61,23 +63,29 @@ const App = () => {
         <main>
           <div className={styles.mainContainer}>
             <Switch location={location || background}>
-              <Route path="/register">
+              <Route path="/register" exact>
                 <SignUp />
               </Route>
-              <Route path="/login">
+              <Route path="/login" exact>
                 <SignIn />
               </Route>
-              <Route path="/forgot-password">
+              <Route path="/forgot-password" exact>
                 <ForgotPassword />
               </Route>
-              <Route path="/reset-password">
+              <Route path="/reset-password" exact>
                 <ResetPassword />
               </Route>
               <ProtectedRoute path="/profile" exact={true}>
                 <Profile />
               </ProtectedRoute>
-              <Route path="/ingredients/:id">
+              <Route path="/ingredients/:id" exact={true}>
                 <IngredientDetails />
+              </Route>
+              <Route path="/feed">
+                <Feed />
+              </Route>
+              <Route path="/profile/orders" exact>
+                <Orders />
               </Route>
               <Route>
                 <BurgerIngredients />

@@ -21,7 +21,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #f2f2f3;
+  /* color: #8585ad; */
 }
 
 .logo {
@@ -36,8 +36,9 @@
 
 .activeLink {
   text-decoration: none;
+  color: #f2f2f3;
 }
-
+/* 
 .activeLink li {
-  color: #f30b0b;
-}
+  color: #f2f2f3;
+} */
