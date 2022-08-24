@@ -21,7 +21,7 @@ const ForgotPassword = () => {
     setValue(e.target.value);
   };
 
-  const onClick = () => {
+  const handleSubmit = () => {
     forgotPassword(value);
   };
 
@@ -30,7 +30,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className={styles.mainContainer}>
+    <form className={styles.mainContainer} onSubmit={handleSubmit}>
       <h2 className={"text text_type_main-medium mb-6"}>
         Восстановление пароля
       </h2>
@@ -39,7 +39,7 @@ const ForgotPassword = () => {
       </div>
       <div className="mb-6">
         <Link to={location}>
-          <Button onClick={onClick}>Восстановить</Button>
+          <Button>Восстановить</Button>
         </Link>
       </div>
       <p className={`${styles.disc} text text_type_main-small`}>
@@ -48,7 +48,7 @@ const ForgotPassword = () => {
           &nbsp;Войти
         </Link>
       </p>
-    </div>
+    </form>
   );
 };
 

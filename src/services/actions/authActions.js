@@ -28,9 +28,13 @@ export const signIn = (form) => {
   return function (dispatch) {
     dispatch({ type: LOGIN_REQUEST });
     return signInApi(form)
-      .then((res) => dispatch({ type: LOGIN_SUCCESS, payload: res }))
+      .then((res) => {
+        dispatch({ type: LOGIN_SUCCESS, payload: res });
+        setCookie("accessToken", res.accessToken);
+        setCookie("refreshToken", res.refreshToken);
+      })
       .catch((error) => {
-        console.error("Error in sighInApi", error);
+        console.error("Error in signInApi", error);
         return dispatch({
           type: LOGIN_FAILED,
         });
@@ -46,7 +50,7 @@ export const signUp = (form) => {
         dispatch({ type: REGISTER_SUCCESS, payload: res.user });
       })
       .catch((error) => {
-        console.error("Error in sighUpApi", error);
+        console.error("Error in signUpApi", error);
         return dispatch({
           type: REGISTER_FAILED,
         });
@@ -59,7 +63,9 @@ export const logOut = (refreshToken) => {
     dispatch({ type: LOGOUT_REQUEST });
     return logOutApi(refreshToken)
       .then((res) => {
-        return dispatch({ type: LOGOUT_SUCCESS });
+        dispatch({ type: LOGOUT_SUCCESS });
+        deleteCookie("refreshToken");
+        deleteCookie("accessToken");
       })
       .catch((error) => {
         console.error("Error in logOutApi", error);

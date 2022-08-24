@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
@@ -71,14 +71,19 @@ const BurgerIngredients = () => {
       dispatch({ type: SET_NAV_INGREDIENTS, payload: "Начинки" });
     }
   };
-  const bunIngredients = ingredients.filter(
-    (ingredient) => ingredient.type === "bun"
+  const bunIngredients = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === "bun"),
+    [ingredients]
   );
-  const sauceIngredients = ingredients.filter(
-    (ingredient) => ingredient.type === "sauce"
+
+  const sauceIngredients = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === "sauce"),
+    [ingredients]
   );
-  const mainIngredients = ingredients.filter(
-    (ingredient) => ingredient.type === "main"
+
+  const mainIngredients = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === "main"),
+    [ingredients]
   );
 
   if (ingredients.length === 0) return null;

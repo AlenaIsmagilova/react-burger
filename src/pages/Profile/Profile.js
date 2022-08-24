@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { logOut, updateUser } from "../../services/actions/authActions";
 import { deleteCookie } from "../../utils/helpers";
 import styles from "../Profile/Profile.module.css";
+import { useForm } from "../../hooks/useForm";
 
 const Profile = () => {
   const [form, setValue] = useState({ name: "", email: "", password: "" });
@@ -18,6 +19,7 @@ const Profile = () => {
   const isLogedIn = useSelector((store) => store.userReducer.isLogedIn);
   const name = useSelector((store) => store.userReducer.currentUser.name);
   const email = useSelector((store) => store.userReducer.currentUser.email);
+  // const { values, handleChange, setValues } = useForm({});
 
   useEffect(() => {
     if (isLogedIn) {
@@ -25,20 +27,22 @@ const Profile = () => {
     }
   }, [isLogedIn]);
 
+  useEffect(() => {
+    if (!isLogedIn) {
+      history.replace({ pathname: "/login" });
+    }
+  }, [isLogedIn]);
+
   const onClick = (e) => {
     e.preventDefault();
-    dispatch(logOut(refreshToken)).then(() => {
-      deleteCookie("refreshToken");
-      deleteCookie("accessToken");
-      history.replace({ pathname: "/login" });
-    });
+    dispatch(logOut(refreshToken));
   };
 
   const handleChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const onSaveClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUser(form));
   };
@@ -50,7 +54,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className={styles.mainContainer}>
+      <div className={styles.mainContainer} onSubmit={handleSubmit}>
         <div className={`${styles.navLinkContainer} mr-15`}>
           <NavLink
             exact
@@ -82,7 +86,7 @@ const Profile = () => {
             В этом разделе вы можете изменить свои персональные данные
           </p>
         </div>
-        <div className={styles.formContainer}>
+        <form className={styles.formContainer}>
           <div className="inputWrapper mb-6">
             <Input
               type={"text"}
@@ -114,11 +118,11 @@ const Profile = () => {
             <Button type="secondary" size="small" onClick={handleResetForm}>
               Отмена
             </Button>
-            <Button type="primary" size="small" onClick={onSaveClick}>
+            <Button type="primary" size="small" onClick={handleSubmit}>
               Сохранить
             </Button>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );

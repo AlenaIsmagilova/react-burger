@@ -2,11 +2,13 @@ import styles from "../BurgerIngredientsItem/BurgerIngredientsItem.module.css";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
+import { useMemo } from "react";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from "react-router-dom";
+import ingredientType from "../../utils/types";
 
 const BurgerIngredientCard = ({ ingredient, openModal }) => {
   const location = useLocation();
@@ -26,9 +28,12 @@ const BurgerIngredientCard = ({ ingredient, openModal }) => {
     (store) => store.burgerConstructorReducer.bunInrgedientsOnly
   );
 
-  const numberOfAddedIngredientsInBurger = currentIngredientInBurger.filter(
-    (item) => item._id === ingredient._id
-  ).length;
+  const numberOfAddedIngredientsInBurger = useMemo(
+    () =>
+      currentIngredientInBurger.filter((item) => item._id === ingredient._id)
+        .length,
+    [currentIngredientInBurger]
+  );
 
   const setCounter = () => {
     if (
@@ -81,7 +86,7 @@ const BurgerIngredientCard = ({ ingredient, openModal }) => {
 };
 
 BurgerIngredientCard.propTypes = {
-  ingredient: PropTypes.object.isRequired,
+  ingredient: ingredientType,
   openModal: PropTypes.func,
 };
 

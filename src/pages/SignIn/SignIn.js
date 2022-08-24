@@ -1,13 +1,12 @@
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import {
   Input,
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../services/actions/authActions.js";
-import { setCookie } from "../../utils/helpers/index.js";
 import styles from "../SignIn/SignIn.module.css";
 
 const SignIn = () => {
@@ -15,28 +14,30 @@ const SignIn = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const token = useSelector((store) => store.userReducer.accessToken);
+  const isLogedIn = useSelector((store) => store.userReducer.isLogedIn);
+  const location = useLocation();
 
   const handleChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const onClick = (e) => {
+  useEffect(() => {
+    if (isLogedIn) {
+      history.replace({ pathname: "/" });
+    }
+  }, [isLogedIn, history]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signIn(form))
-      .then((data) => {
-        setCookie("accessToken", data.payload.accessToken);
-        setCookie("refreshToken", data.payload.refreshToken);
-        history.replace({ pathname: "/" });
-      })
-      .catch((err) => console.error("my error ", err));
+    dispatch(signIn(form));
   };
 
   if (token) {
-    return <Redirect to={{ pathname: "/" }} />;
+    return <Redirect to={{ pathname: location?.state?.from || "/" }} />;
   }
 
   return (
-    <div className={styles.mainContainer}>
+    <form className={styles.mainContainer} onSubmit={handleSubmit}>
       <h2 className={"text text_type_main-medium mb-6"}>Вход</h2>
       <div className={`mb-6 inputWrapper`}>
         <EmailInput onChange={handleChange} value={form.email} name="email" />
@@ -52,7 +53,7 @@ const SignIn = () => {
       </div>
 
       <div className="mb-20">
-        <Button onClick={onClick}>Войти</Button>
+        <Button>Войти</Button>
       </div>
       <p className={`${styles.disc} text text_type_main-small mb-4`}>
         Вы — новый пользователь?
@@ -66,7 +67,7 @@ const SignIn = () => {
           &nbsp;Восстановить пароль
         </Link>
       </p>
-    </div>
+    </form>
   );
 };
 

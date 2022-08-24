@@ -40,11 +40,11 @@ const App = () => {
     (store) => store.ingredientsItemReducer.currentIngredient
   );
   const location = useLocation();
-  const background = location.state?.background;
+  let background = location.state?.background;
 
   useEffect(() => {
     dispatch(authUser());
-  }, []);
+  }, [dispatch]);
 
   //отправляю санки(экшн-функцию)
   useEffect(() => {
@@ -62,7 +62,7 @@ const App = () => {
       <DndProvider backend={HTML5Backend}>
         <main>
           <div className={styles.mainContainer}>
-            <Switch location={location || background}>
+            <Switch location={background || location}>
               <Route path="/register" exact>
                 <SignUp />
               </Route>

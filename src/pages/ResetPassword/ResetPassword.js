@@ -17,7 +17,7 @@ const ResetPassword = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const onClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     resetPassword(form);
   };
@@ -32,7 +32,7 @@ const ResetPassword = () => {
         <Redirect to={{ pathname: "/forgot-password" }} />
       ) : (
         <>
-          <div className={styles.mainContainer}>
+          <form className={styles.mainContainer} onSubmit={handleSubmit}>
             <h2 className={"text text_type_main-medium mb-6"}>
               Восстановление пароля
             </h2>
@@ -54,7 +54,7 @@ const ResetPassword = () => {
               />
             </div>
             <div className="mb-20">
-              <Button onClick={onClick}>Сохранить</Button>
+              <Button>Сохранить</Button>
             </div>
             <p className={`${styles.disc} text text_type_main-small`}>
               Вспомнили пароль?
@@ -62,7 +62,7 @@ const ResetPassword = () => {
                 &nbsp;Войти
               </Link>
             </p>
-          </div>
+          </form>
         </>
       )}
     </>

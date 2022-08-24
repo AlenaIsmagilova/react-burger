@@ -19,7 +19,7 @@ const SignUp = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const onClick = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signUp(form));
   };
@@ -30,7 +30,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div className={styles.wrapper}>
+      <form className={styles.wrapper} onSubmit={handleSubmit}>
         <h2 className={"text text_type_main-medium mb-6"}>Регистрация</h2>
         <div className="mb-6">
           <Input
@@ -54,7 +54,7 @@ const SignUp = () => {
           />
         </div>
         <div className="mb-20">
-          <Button onClick={onClick}>Зарегистрироваться</Button>
+          <Button>Зарегистрироваться</Button>
         </div>
         <p className={`${styles.disc} text text_type_main-small`}>
           Уже зарегистрированы?
@@ -62,7 +62,7 @@ const SignUp = () => {
             &nbsp;Войти
           </Link>
         </p>
-      </div>
+      </form>
     </>
   );
 };

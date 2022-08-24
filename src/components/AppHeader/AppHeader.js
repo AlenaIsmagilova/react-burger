@@ -48,7 +48,9 @@ function AppHeader() {
             </li>
           </NavLink>
           <li className={styles.logo}>
-            <Logo></Logo>
+            <NavLink to="/" exact>
+              <Logo></Logo>
+            </NavLink>
           </li>
           <NavLink
             to="/profile"
