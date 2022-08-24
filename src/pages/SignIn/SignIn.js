@@ -4,22 +4,22 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../services/actions/authActions.js";
 import styles from "../SignIn/SignIn.module.css";
 
 const SignIn = () => {
-  const [form, setValue] = useState({ email: "", password: "" });
+  const { values, handleChange } = useForm({
+    email: "",
+    password: "",
+  });
   const history = useHistory();
   const dispatch = useDispatch();
   const token = useSelector((store) => store.userReducer.accessToken);
   const isLogedIn = useSelector((store) => store.userReducer.isLogedIn);
   const location = useLocation();
-
-  const handleChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
 
   useEffect(() => {
     if (isLogedIn) {
@@ -29,7 +29,7 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signIn(form));
+    dispatch(signIn(values));
   };
 
   if (token) {
@@ -40,12 +40,12 @@ const SignIn = () => {
     <form className={styles.mainContainer} onSubmit={handleSubmit}>
       <h2 className={"text text_type_main-medium mb-6"}>Вход</h2>
       <div className={`mb-6 inputWrapper`}>
-        <EmailInput onChange={handleChange} value={form.email} name="email" />
+        <EmailInput onChange={handleChange} value={values.email} name="email" />
       </div>
       <div className={`mb-6 inputWrapper`}>
         <Input
           onChange={handleChange}
-          value={form.password}
+          value={values.password}
           name="password"
           placeholder={"Пароль"}
           icon={"HideIcon"}

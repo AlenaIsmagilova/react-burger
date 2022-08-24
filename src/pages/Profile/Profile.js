@@ -5,25 +5,28 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { logOut, updateUser } from "../../services/actions/authActions";
-import { deleteCookie } from "../../utils/helpers";
 import styles from "../Profile/Profile.module.css";
 import { useForm } from "../../hooks/useForm";
 
 const Profile = () => {
-  const [form, setValue] = useState({ name: "", email: "", password: "" });
   const dispatch = useDispatch();
   const history = useHistory();
   const refreshToken = useSelector((store) => store.userReducer.refreshToken);
   const isLogedIn = useSelector((store) => store.userReducer.isLogedIn);
   const name = useSelector((store) => store.userReducer.currentUser.name);
   const email = useSelector((store) => store.userReducer.currentUser.email);
-  // const { values, handleChange, setValues } = useForm({});
+
+  const { values, handleChange, setValues } = useForm({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   useEffect(() => {
     if (isLogedIn) {
-      setValue({ ...form, name, email });
+      setValues({ ...values, name, email });
     }
   }, [isLogedIn]);
 
@@ -38,18 +41,14 @@ const Profile = () => {
     dispatch(logOut(refreshToken));
   };
 
-  const handleChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUser(form));
+    dispatch(updateUser(values));
   };
 
   const handleResetForm = (e) => {
     e.preventDefault();
-    setValue({ ...form, name, email });
+    setValues({ ...values, name, email });
   };
 
   return (
@@ -90,7 +89,7 @@ const Profile = () => {
           <div className="inputWrapper mb-6">
             <Input
               type={"text"}
-              value={form.name}
+              value={values.name}
               name="name"
               onChange={handleChange}
               placeholder={"Имя"}
@@ -99,7 +98,7 @@ const Profile = () => {
           </div>
           <div className="mb-6 inputWrapper">
             <EmailInput
-              value={form.email}
+              value={values.email}
               name="email"
               onChange={handleChange}
             />
@@ -107,7 +106,7 @@ const Profile = () => {
           <div className="mb-6 inputWrapper">
             <Input
               type={"password"}
-              value={form.password}
+              value={values.password}
               name="password"
               onChange={handleChange}
               placeholder={"Пароль"}

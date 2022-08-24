@@ -3,26 +3,22 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
-import { useState } from "react";
 import { forgotPassword } from "../../utils/api/api.js";
 import styles from "../ForgotPassword/ForgotPassword.module.css";
 import { useSelector } from "react-redux";
+import { useForm } from "../../hooks/useForm.js";
 
 const ForgotPassword = () => {
-  const [value, setValue] = useState("");
   const token = useSelector((store) => store.userReducer.accessToken);
   const location = {
     pathname: "/reset-password",
     state: { fromForgotPassword: true },
   };
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    setValue(e.target.value);
-  };
+  const { values, handleChange } = useForm({ email: "" });
 
   const handleSubmit = () => {
-    forgotPassword(value);
+    forgotPassword(values);
   };
 
   if (token) {
@@ -35,11 +31,11 @@ const ForgotPassword = () => {
         Восстановление пароля
       </h2>
       <div className="mb-6 inputWrapper">
-        <EmailInput value={value} onChange={handleChange} />
+        <EmailInput name="email" value={values.email} onChange={handleChange} />
       </div>
       <div className="mb-6">
         <Link to={location}>
-          <Button>Восстановить</Button>
+          <Button disabled={!values.email}>Восстановить</Button>
         </Link>
       </div>
       <p className={`${styles.disc} text text_type_main-small`}>

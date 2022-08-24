@@ -1,6 +1,7 @@
-import PropTypes from "prop-types";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import ingredientType from "../../utils/types";
 import styles from "../IngredientDetails/IngredientDetails.module.css";
 
 const IngredientDetails = () => {
@@ -8,6 +9,15 @@ const IngredientDetails = () => {
   const ingredients = useSelector(
     (store) => store.burgerIngredientsReducer.ingredientItems
   );
+  const history = useHistory();
+  const location = useLocation();
+
+  console.log(params);
+
+  useEffect(() => {
+    if (history.action === "POP")
+      history.replace({ pathname: location.pathname });
+  }, []);
 
   const currIngr = ingredients.find((item) => {
     return item._id === params.id;
@@ -67,14 +77,7 @@ const IngredientDetails = () => {
 };
 
 IngredientDetails.propTypes = {
-  currIngr: PropTypes.shape({
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    proteins: PropTypes.number,
-    calories: PropTypes.number,
-    name: PropTypes.string,
-    image: PropTypes.string,
-  }),
+  currIngr: ingredientType,
 };
 
 export default IngredientDetails;

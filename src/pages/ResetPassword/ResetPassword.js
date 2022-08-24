@@ -3,23 +3,22 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useForm } from "../../hooks/useForm";
 import { resetPassword } from "../../utils/api/api";
 import styles from "../ResetPassword/ResetPassword.module.css";
 import { useSelector } from "react-redux";
 
 const ResetPassword = () => {
-  const [form, setValue] = useState({ password: "", token: "" });
   const token = useSelector((store) => store.userReducer.accessToken);
   const history = useHistory();
-
-  const handleChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  const { values, handleChange } = useForm({
+    password: "",
+    token: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    resetPassword(form);
+    resetPassword(values);
   };
 
   if (token) {
@@ -38,7 +37,7 @@ const ResetPassword = () => {
             </h2>
             <div className="mb-6 inputWrapper">
               <Input
-                value={form.password}
+                value={values.password}
                 onChange={handleChange}
                 name="password"
                 placeholder={"Введите новый пароль"}
@@ -47,7 +46,7 @@ const ResetPassword = () => {
             </div>
             <div className="mb-6 inputWrapper">
               <Input
-                value={form.token}
+                value={values.token}
                 onChange={handleChange}
                 name="token"
                 placeholder={"Введите код из письма"}

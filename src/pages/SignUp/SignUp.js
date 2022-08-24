@@ -6,22 +6,22 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../SignUp/SignUp.module.css";
 import { signUp } from "../../services/actions/authActions";
-import { useState } from "react";
+import { useForm } from "../../hooks/useForm";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const SignUp = () => {
-  const [form, setValue] = useState({ email: "", password: "", name: "" });
+  const { values, handleChange } = useForm({
+    name: "",
+    email: "",
+    password: "",
+  });
   const dispatch = useDispatch();
   const token = useSelector((store) => store.userReducer.accessToken);
 
-  const handleChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signUp(form));
+    dispatch(signUp(values));
   };
 
   if (token) {
@@ -36,19 +36,23 @@ const SignUp = () => {
           <Input
             name="name"
             onChange={handleChange}
-            value={form.name}
+            value={values.name}
             placeholder={"Имя"}
             icon={"EditIcon"}
           />
         </div>
         <div className="mb-6">
-          <EmailInput name="email" onChange={handleChange} value={form.email} />
+          <EmailInput
+            name="email"
+            onChange={handleChange}
+            value={values.email}
+          />
         </div>
         <div className="mb-6">
           <Input
             name="password"
             onChange={handleChange}
-            value={form.password}
+            value={values.password}
             placeholder={"Пароль"}
             icon={"HideIcon"}
           />

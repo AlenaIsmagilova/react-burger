@@ -26,16 +26,25 @@ import Modal from "../Modal/Modal.js";
 import { SET_INGREDIENTS_MODAL_INACTIVE } from "../../services/actions/actions";
 import Feed from "../../pages/Feed/Feed.js";
 import Orders from "../../pages/Profile/Orders.js";
+import OrderDetails from "../OrderDetails/OrderDetails.js";
+import {
+  SET_ORDER_MODAL_INACTIVE,
+  RESET_CONSTRUCTOR_AFTER_ORDER,
+} from "../../services/actions/actions.js";
 
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const ingredients = useSelector(
-    (store) => store.burgerIngredientsReducer.ingredientItems
+  // const ingredients = useSelector(
+  //   (store) => store.burgerIngredientsReducer.ingredientItems
+  // );
+
+  const orderModalActive = useSelector(
+    (store) => store.burgerIngredientsReducer.isOrderModalOpen
   );
-  const modalActive = useSelector(
-    (store) => store.burgerIngredientsReducer.isIngredientsModalOpen
-  );
+
+  const order = useSelector((store) => store.orderDetailsReducer.orderNumber);
+
   const currentIngredient = useSelector(
     (store) => store.ingredientsItemReducer.currentIngredient
   );
@@ -55,6 +64,14 @@ const App = () => {
     dispatch({ type: SET_INGREDIENTS_MODAL_INACTIVE });
     history.goBack();
   };
+
+  const handleClose = () => {
+    dispatch({ type: SET_ORDER_MODAL_INACTIVE });
+    dispatch({ type: RESET_CONSTRUCTOR_AFTER_ORDER });
+  };
+
+  console.log("real location ", location);
+  console.log("background location ", background);
 
   return (
     <>
@@ -96,12 +113,16 @@ const App = () => {
               <Route path="/ingredients/:id">
                 <Modal
                   title="Детали ингредиента"
-                  open={modalActive}
                   handleClose={closeModalWithDispatch}
                 >
                   <IngredientDetails currIngr={currentIngredient} />
                 </Modal>
               </Route>
+            )}
+            {orderModalActive && (
+              <Modal open={orderModalActive} handleClose={handleClose}>
+                <OrderDetails orderNumber={order} />
+              </Modal>
             )}
           </div>
         </main>
