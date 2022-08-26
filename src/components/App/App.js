@@ -31,13 +31,11 @@ import {
   SET_ORDER_MODAL_INACTIVE,
   RESET_CONSTRUCTOR_AFTER_ORDER,
 } from "../../services/actions/actions.js";
+import Spinner from "../Spinner/Spinner.js";
 
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  // const ingredients = useSelector(
-  //   (store) => store.burgerIngredientsReducer.ingredientItems
-  // );
 
   const orderModalActive = useSelector(
     (store) => store.burgerIngredientsReducer.isOrderModalOpen
@@ -50,6 +48,8 @@ const App = () => {
   );
   const location = useLocation();
   let background = location.state?.background;
+
+  const { isLoading: userLoader } = useSelector((store) => store.userReducer);
 
   useEffect(() => {
     dispatch(authUser());
@@ -70,63 +70,66 @@ const App = () => {
     dispatch({ type: RESET_CONSTRUCTOR_AFTER_ORDER });
   };
 
-  console.log("real location ", location);
-  console.log("background location ", background);
-
   return (
     <>
-      <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        <main>
-          <div className={styles.mainContainer}>
-            <Switch location={background || location}>
-              <Route path="/register" exact>
-                <SignUp />
-              </Route>
-              <Route path="/login" exact>
-                <SignIn />
-              </Route>
-              <Route path="/forgot-password" exact>
-                <ForgotPassword />
-              </Route>
-              <Route path="/reset-password" exact>
-                <ResetPassword />
-              </Route>
-              <ProtectedRoute path="/profile" exact={true}>
-                <Profile />
-              </ProtectedRoute>
-              <Route path="/ingredients/:id" exact={true}>
-                <IngredientDetails />
-              </Route>
-              <Route path="/feed">
-                <Feed />
-              </Route>
-              <Route path="/profile/orders" exact>
-                <Orders />
-              </Route>
-              <Route>
-                <BurgerIngredients />
-                <BurgerConstructor />
-              </Route>
-            </Switch>
-            {background && (
-              <Route path="/ingredients/:id">
-                <Modal
-                  title="Детали ингредиента"
-                  handleClose={closeModalWithDispatch}
-                >
-                  <IngredientDetails currIngr={currentIngredient} />
-                </Modal>
-              </Route>
-            )}
-            {orderModalActive && (
-              <Modal open={orderModalActive} handleClose={handleClose}>
-                <OrderDetails orderNumber={order} />
-              </Modal>
-            )}
-          </div>
-        </main>
-      </DndProvider>
+      {userLoader ? (
+        <Spinner />
+      ) : (
+        <>
+          <AppHeader />
+          <DndProvider backend={HTML5Backend}>
+            <main>
+              <div className={styles.mainContainer}>
+                <Switch location={background || location}>
+                  <Route path="/register" exact>
+                    <SignUp />
+                  </Route>
+                  <Route path="/login" exact>
+                    <SignIn />
+                  </Route>
+                  <Route path="/forgot-password" exact>
+                    <ForgotPassword />
+                  </Route>
+                  <Route path="/reset-password" exact>
+                    <ResetPassword />
+                  </Route>
+                  <ProtectedRoute path="/profile" exact={true}>
+                    <Profile />
+                  </ProtectedRoute>
+                  <Route path="/ingredients/:id" exact={true}>
+                    <IngredientDetails />
+                  </Route>
+                  <Route path="/feed">
+                    <Feed />
+                  </Route>
+                  <Route path="/profile/orders" exact>
+                    <Orders />
+                  </Route>
+                  <Route>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                  </Route>
+                </Switch>
+                {background && (
+                  <Route path="/ingredients/:id">
+                    <Modal
+                      title="Детали ингредиента"
+                      handleClose={closeModalWithDispatch}
+                    >
+                      <IngredientDetails currIngr={currentIngredient} />
+                    </Modal>
+                  </Route>
+                )}
+                {orderModalActive && (
+                  <Modal open={orderModalActive} handleClose={handleClose}>
+                    <OrderDetails orderNumber={order} />
+                  </Modal>
+                )}
+              </div>
+            </main>
+          </DndProvider>
+        </>
+      )}
     </>
   );
 };

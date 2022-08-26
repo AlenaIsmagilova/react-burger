@@ -17,7 +17,6 @@ const SignIn = () => {
   });
   const history = useHistory();
   const dispatch = useDispatch();
-  const token = useSelector((store) => store.userReducer.accessToken);
   const isLogedIn = useSelector((store) => store.userReducer.isLogedIn);
   const location = useLocation();
 
@@ -32,7 +31,7 @@ const SignIn = () => {
     dispatch(signIn(values));
   };
 
-  if (token) {
+  if (isLogedIn) {
     return <Redirect to={{ pathname: location?.state?.from || "/" }} />;
   }
 

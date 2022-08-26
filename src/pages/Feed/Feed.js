@@ -29,9 +29,9 @@ const Feed = () => {
                 </p>
                 <div className={styles.priceContainer}>
                   <div className={styles.iconsWrapper}>
-                    <img></img>
+                    <img className={styles.image}></img>
                   </div>
-                  <div className={styles.totalCount}>
+                  <div className={`${styles.totalCount} ml-6`}>
                     <p
                       className={`${styles.price} text text_type_digits-default mr-2`}
                     >
@@ -58,8 +58,10 @@ const Feed = () => {
                   Interstellar бургер
                 </p>
                 <div className={styles.priceContainer}>
-                  <div></div>
-                  <div className={styles.totalCount}>
+                  <div className={styles.iconsWrapper}>
+                    <img className={styles.image}></img>
+                  </div>
+                  <div className={`${styles.totalCount} ml-6`}>
                     <p
                       className={`${styles.price} text text_type_digits-default mr-2`}
                     >
@@ -86,8 +88,10 @@ const Feed = () => {
                   Black Hole Singularity острый бургер
                 </p>
                 <div className={styles.priceContainer}>
-                  <div></div>
-                  <div className={styles.totalCount}>
+                  <div className={styles.iconsWrapper}>
+                    <img className={styles.image}></img>
+                  </div>
+                  <div className={`${styles.totalCount} ml-6`}>
                     <p
                       className={`${styles.price} text text_type_digits-default mr-2`}
                     >
@@ -114,8 +118,10 @@ const Feed = () => {
                   Supernova Infinity бургер
                 </p>
                 <div className={styles.priceContainer}>
-                  <div></div>
-                  <div className={styles.totalCount}>
+                  <div className={styles.iconsWrapper}>
+                    <img className={styles.image}></img>
+                  </div>
+                  <div className={`${styles.totalCount} ml-6`}>
                     <p
                       className={`${styles.price} text text_type_digits-default mr-2`}
                     >
@@ -127,9 +133,37 @@ const Feed = () => {
               </li>
             </ul>
           </div>
-          <div className={styles.statsContainer}>
-            <h3>Готовы:</h3>
-            <h3>В работе:</h3>
+          <div>
+            <div className={`${styles.statsContainer} mb-15`}>
+              <div className={`${styles.doneOrders} mr-9`}>
+                <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
+                <p
+                  className={`${styles.doneOrderNumber} text text_type_digits-default`}
+                >
+                  21413
+                </p>
+              </div>
+              <div className={styles.onTheGoOrders}>
+                <h3 className="text text_type_main-medium mb-6">В работе:</h3>
+                <p className="text text_type_digits-default">23414</p>
+              </div>
+            </div>
+            <h3 className="text text_type_main-medium">
+              Выполнено за все время:
+            </h3>
+            <p
+              className={`${styles.ordersNumber} text text_type_digits-large mb-15`}
+            >
+              321498
+            </p>
+            <h3 className="text text_type_main-medium">
+              Выполнено за сегодня:
+            </h3>
+            <p
+              className={`${styles.ordersNumber} text text_type_digits-large mb-15`}
+            >
+              341
+            </p>
           </div>
         </div>
       </div>

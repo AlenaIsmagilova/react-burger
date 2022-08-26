@@ -14,7 +14,7 @@ import {
 } from "../actions/authActions.js";
 
 export const initialState = {
-  isLoading: false,
+  isLoading: true,
   error: false,
   isLogedIn: false,
   accessToken: "",
