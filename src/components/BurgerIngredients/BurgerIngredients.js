@@ -1,15 +1,12 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import BurgerIngredientsItem from "../BurgerIngredientsItem/BurgerIngredientsItem.js";
-import Modal from "../Modal/Modal.js";
-import IngredientDetails from "../IngredientDetails/IngredientDetails.js";
 import {
   SET_INGREDIENTS_ITEM_IN_MODAL,
   SET_NAV_INGREDIENTS,
   SET_INGREDIENTS_MODAL_ACTIVE,
-  SET_INGREDIENTS_MODAL_INACTIVE,
 } from "../../services/actions/actions";
 
 const BurgerIngredients = () => {
@@ -18,16 +15,9 @@ const BurgerIngredients = () => {
   const ingredients = useSelector(
     (store) => store.burgerIngredientsReducer.ingredientItems
   );
-  const currentIngredient = useSelector(
-    (store) => store.ingredientsItemReducer.currentIngredient
-  );
 
   const current = useSelector(
     (store) => store.burgerIngredientsReducer.currentIngredients
-  );
-
-  const modalActive = useSelector(
-    (store) => store.burgerIngredientsReducer.isIngredientsModalOpen
   );
 
   const sauceDivEl = useRef(null);
@@ -81,14 +71,19 @@ const BurgerIngredients = () => {
       dispatch({ type: SET_NAV_INGREDIENTS, payload: "Начинки" });
     }
   };
-  const bunIngredients = ingredients.filter(
-    (ingredient) => ingredient.type === "bun"
+  const bunIngredients = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === "bun"),
+    [ingredients]
   );
-  const sauceIngredients = ingredients.filter(
-    (ingredient) => ingredient.type === "sauce"
+
+  const sauceIngredients = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === "sauce"),
+    [ingredients]
   );
-  const mainIngredients = ingredients.filter(
-    (ingredient) => ingredient.type === "main"
+
+  const mainIngredients = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === "main"),
+    [ingredients]
   );
 
   if (ingredients.length === 0) return null;
@@ -139,13 +134,6 @@ const BurgerIngredients = () => {
           ></BurgerIngredientsItem>
         </ul>
       </div>
-      <Modal
-        title="Детали ингредиента"
-        open={modalActive}
-        handleClose={() => dispatch({ type: SET_INGREDIENTS_MODAL_INACTIVE })}
-      >
-        <IngredientDetails currIngr={currentIngredient} />
-      </Modal>
     </section>
   );
 };

@@ -1,0 +1,17 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 480px;
+  min-height: 430px;
+  align-items: center;
+  margin-top: 180px;
+}
+
+.disc {
+  color: #8585ad;
+}
+
+.link {
+  text-decoration: none;
+  color: #4c4cff;
+}

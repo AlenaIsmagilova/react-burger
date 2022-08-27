@@ -1,27 +1,25 @@
 import { useMemo } from "react";
 import { useDrop } from "react-dnd";
+import { useHistory } from "react-router-dom";
 import {
   ConstructorElement,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
-import Modal from "../Modal/Modal.js";
-import OrderDetails from "../OrderDetails/OrderDetails.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderDetails } from "../../services/actions/actions.js";
 import {
   RESET_ORDER_DETAILS,
   SET_ORDER_MODAL_ACTIVE,
-  SET_ORDER_MODAL_INACTIVE,
   ADD_INGREDIENT_IN_BURGER,
   ADD_BUN_IN_BURGER,
   DELETE_INGREDIENT_IN_BURGER,
-  RESET_CONSTRUCTOR_AFTER_ORDER,
 } from "../../services/actions/actions.js";
 import BurgerConstructorAddedItem from "../BurgerConstructorAddedItem/BurgerConstructorAddedItem.js";
 
 const BurgerConstructor = () => {
+  const history = useHistory();
   const currentIngredientInBurger = useSelector(
     (store) => store.burgerConstructorReducer.currentIngredientIntoBurgerItems
   );
@@ -29,6 +27,8 @@ const BurgerConstructor = () => {
   const currentBunInBurger = useSelector(
     (store) => store.burgerConstructorReducer.bunInrgedientsOnly
   );
+
+  const userIsLogedIn = useSelector((store) => store.userReducer.isLogedIn);
 
   const handleTotalPrice = () => {
     let totalCostBuns = 0;
@@ -81,9 +81,6 @@ const BurgerConstructor = () => {
     }
   };
 
-  const orderModalActive = useSelector(
-    (store) => store.burgerIngredientsReducer.isOrderModalOpen
-  );
   const dispatch = useDispatch();
 
   const { currentIngredientIntoBurgerItems } = useSelector((store) => {
@@ -94,8 +91,6 @@ const BurgerConstructor = () => {
     (store) => store.burgerIngredientsReducer.ingredientItems
   );
 
-  const order = useSelector((store) => store.orderDetailsReducer.orderNumber);
-
   const prepareIngredientsId = useMemo(
     () =>
       ingredients.map((ingredient) => {
@@ -104,15 +99,14 @@ const BurgerConstructor = () => {
     [ingredients]
   );
 
-  const handleClose = () => {
-    dispatch({ type: SET_ORDER_MODAL_INACTIVE });
-    dispatch({ type: RESET_CONSTRUCTOR_AFTER_ORDER });
-  };
-
   const handleOpen = () => {
-    dispatch({ type: RESET_ORDER_DETAILS });
-    dispatch({ type: SET_ORDER_MODAL_ACTIVE });
-    dispatch(getOrderDetails(prepareIngredientsId));
+    if (userIsLogedIn) {
+      dispatch({ type: RESET_ORDER_DETAILS });
+      dispatch({ type: SET_ORDER_MODAL_ACTIVE });
+      dispatch(getOrderDetails(prepareIngredientsId));
+    } else {
+      return history.push("/login");
+    }
   };
 
   const handleDeleteIngredient = (ingredient) => {
@@ -185,9 +179,6 @@ const BurgerConstructor = () => {
                 >
                   Оформить заказ
                 </Button>
-                <Modal open={orderModalActive} handleClose={handleClose}>
-                  <OrderDetails orderNumber={order} />
-                </Modal>
               </div>
             }
           </>

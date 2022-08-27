@@ -4,40 +4,76 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { NavLink, useLocation } from "react-router-dom";
 import styles from "./AppHeader.module.css";
 
 function AppHeader() {
+  const location = useLocation();
   return (
     <header className={styles.header}>
       <nav className={styles.navigation}>
         <ul className={styles.itemsList}>
-          <li
-            className={`pl-5 pt-4 pr-2 pb-4 ${styles.item} text text_type_main-small`}
+          <NavLink
+            exact
+            to="/"
+            className={styles.link}
+            activeClassName={styles.activeLink}
           >
-            <div className="mr-2">
-              <BurgerIcon type="primary" />
-            </div>
-            Конструктор
-          </li>
-          <li
-            className={`pl-5 pt-4 pr-2 pb-4 ${styles.item} text text_type_main-small`}
+            <li
+              className={`pl-5 pt-4 pr-2 pb-4 ${styles.item} text text_type_main-small`}
+            >
+              <div className="mr-2">
+                <BurgerIcon
+                  type={location.pathname === "/" ? "primary" : "secondary"}
+                />
+              </div>
+              Конструктор
+            </li>
+          </NavLink>
+          <NavLink
+            exact
+            to="/feed"
+            className={styles.link}
+            activeClassName={styles.activeLink}
           >
-            <div className="mr-2">
-              <ListIcon type="secondary" />
-            </div>
-            Лента заказов
-          </li>
+            <li
+              className={`pl-5 pt-4 pr-2 pb-4 ${styles.item} text text_type_main-small`}
+            >
+              <div className="mr-2">
+                <ListIcon
+                  type={location.pathname === "/feed" ? "primary" : "secondary"}
+                />
+              </div>
+              Лента заказов
+            </li>
+          </NavLink>
           <li className={styles.logo}>
-            <Logo></Logo>
+            <NavLink to="/" exact>
+              <Logo></Logo>
+            </NavLink>
           </li>
-          <li
-            className={`pl-5 pt-4 pr-2 pb-4 ${styles.item} text text_type_main-small`}
+          <NavLink
+            to="/profile"
+            exact
+            className={styles.link}
+            activeClassName={styles.activeLink}
           >
-            <div className="mr-2">
-              <ProfileIcon type="secondary" />
-            </div>
-            Личный кабинет
-          </li>
+            <li
+              className={`pl-5 pt-4 pr-2 pb-4 ${styles.item} text text_type_main-small`}
+            >
+              <div className="mr-2">
+                <ProfileIcon
+                  type={
+                    location.pathname === "/profile" ||
+                    location.pathname === "/profile/orders"
+                      ? "primary"
+                      : "secondary"
+                  }
+                />
+              </div>
+              Личный кабинет
+            </li>
+          </NavLink>
         </ul>
       </nav>
     </header>

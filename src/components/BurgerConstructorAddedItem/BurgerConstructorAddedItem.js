@@ -8,6 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { MOVE_INGREDIENTS } from "../../services/actions/actions.js";
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
+import ingredientType from "../../utils/types.js";
 
 const BurgerConstructorAddedItem = ({ handleClose, index, item }) => {
   const ref = useRef(null);
@@ -61,7 +62,7 @@ const BurgerConstructorAddedItem = ({ handleClose, index, item }) => {
 };
 
 BurgerConstructorAddedItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: ingredientType,
   index: PropTypes.number,
   handleClose: PropTypes.func,
 };

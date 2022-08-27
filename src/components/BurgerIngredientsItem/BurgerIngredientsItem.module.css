@@ -1,3 +1,8 @@
+.mainContainer {
+  text-decoration: none;
+  color: #f2f2f3;
+}
+
 .burgerIngredientsItemImage {
   width: 240px;
   height: 120px;

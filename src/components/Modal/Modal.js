@@ -8,7 +8,7 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const modalRoot = document.getElementById("react-modals");
 
-const Modal = ({ children, open, handleClose, title }) => {
+const Modal = ({ children, handleClose, title }) => {
   const closeOnEscKey = (e) => (e.key === "Escape" ? handleClose() : null);
 
   useEffect(() => {
@@ -20,24 +20,24 @@ const Modal = ({ children, open, handleClose, title }) => {
 
   return ReactDOM.createPortal(
     <>
-      {open && (
-        <ModalOverlay
-          className={stylesForOverlay.modalOverlay}
-          onClick={handleClose}
-        >
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <div className={styles.closeBtnWrapper} onClick={handleClose}>
-              {title && (
-                <h2 className={`text text_type_main-large ${styles.header}`}>
-                  {title}
-                </h2>
-              )}
-              <CloseIcon type="primary" />
-            </div>
-            <div className={styles.modalContent}>{children}</div>
+      (
+      <ModalOverlay
+        className={stylesForOverlay.modalOverlay}
+        onClick={handleClose}
+      >
+        <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+          <div className={styles.closeBtnWrapper} onClick={handleClose}>
+            {title && (
+              <h2 className={`text text_type_main-large ${styles.header}`}>
+                {title}
+              </h2>
+            )}
+            <CloseIcon type="primary" />
           </div>
-        </ModalOverlay>
-      )}
+          <div className={styles.modalContent}>{children}</div>
+        </div>
+      </ModalOverlay>
+      )
     </>,
     modalRoot
   );

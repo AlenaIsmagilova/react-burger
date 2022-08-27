@@ -2,3 +2,15 @@
   display: flex;
   justify-content: center;
 }
+
+:global .inputWrapper {
+  width: 100%;
+}
+
+:global .inputWrapper .input__container {
+  width: auto;
+}
+
+:global .inputWrapper .input {
+  width: auto;
+}
