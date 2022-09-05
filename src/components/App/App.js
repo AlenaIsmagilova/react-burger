@@ -23,14 +23,15 @@ import { authUser } from "../../services/actions/authActions.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import IngredientDetails from "../IngredientDetails/IngredientDetails.js";
 import Modal from "../Modal/Modal.js";
-import { SET_INGREDIENTS_MODAL_INACTIVE } from "../../services/actions/actions";
-import Feed from "../../pages/Feed/Feed.js";
-import Orders from "../../pages/Profile/Orders.js";
-import OrderDetails from "../OrderDetails/OrderDetails.js";
 import {
+  SET_INGREDIENTS_MODAL_INACTIVE,
   SET_ORDER_MODAL_INACTIVE,
   RESET_CONSTRUCTOR_AFTER_ORDER,
-} from "../../services/actions/actions.js";
+} from "../../services/actions/actions";
+import Feed from "../../pages/Feed/Feed.js";
+import FeedDetails from "../FeedDetails/FeedDetails.js";
+import Orders from "../../pages/Profile/Orders.js";
+import OrderDetails from "../OrderDetails/OrderDetails.js";
 import Spinner from "../Spinner/Spinner.js";
 
 const App = () => {
@@ -53,12 +54,13 @@ const App = () => {
 
   useEffect(() => {
     dispatch(authUser());
+    dispatch(getBurgerIngredientsItems());
   }, [dispatch]);
 
   //отправляю санки(экшн-функцию)
-  useEffect(() => {
-    dispatch(getBurgerIngredientsItems());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getBurgerIngredientsItems());
+  // }, [dispatch]);
 
   const closeModalWithDispatch = () => {
     dispatch({ type: SET_INGREDIENTS_MODAL_INACTIVE });
@@ -93,14 +95,20 @@ const App = () => {
                   <Route path="/reset-password" exact>
                     <ResetPassword />
                   </Route>
-                  <ProtectedRoute path="/profile" exact={true}>
+                  <ProtectedRoute path="/profile" exact>
                     <Profile />
                   </ProtectedRoute>
-                  <Route path="/ingredients/:id" exact={true}>
+                  <ProtectedRoute path="/profile/orders/:id">
+                    <FeedDetails />
+                  </ProtectedRoute>
+                  <Route path="/ingredients/:id" exact>
                     <IngredientDetails />
                   </Route>
-                  <Route path="/feed">
+                  <Route path="/feed" exact>
                     <Feed />
+                  </Route>
+                  <Route path="/feed/:id">
+                    <FeedDetails />
                   </Route>
                   <Route path="/profile/orders" exact>
                     <Orders />
@@ -117,6 +125,20 @@ const App = () => {
                       handleClose={closeModalWithDispatch}
                     >
                       <IngredientDetails currIngr={currentIngredient} />
+                    </Modal>
+                  </Route>
+                )}
+                {background && (
+                  <Route path="/feed/:id">
+                    <Modal handleClose={closeModalWithDispatch}>
+                      <FeedDetails />
+                    </Modal>
+                  </Route>
+                )}
+                {background && (
+                  <Route path="/profile/orders/:id">
+                    <Modal handleClose={closeModalWithDispatch}>
+                      <FeedDetails />
                     </Modal>
                   </Route>
                 )}

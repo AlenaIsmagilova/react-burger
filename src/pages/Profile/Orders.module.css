@@ -1,0 +1,61 @@
+.wrapperForScroll {
+  height: calc(100vh - 143px);
+  /* overflow-y: scroll; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: auto;
+}
+
+.wrapperForScroll::-webkit-scrollbar {
+  width: 8px; /* ширина для вертикального скролла */
+  background-color: #2f2f37;
+}
+
+/* ползунок скроллбара */
+.wrapperForScroll::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+
+.wrapperForScroll::-webkit-scrollbar-thumb:hover {
+  background-color: #2f2f37;
+}
+
+.ordersContainer {
+  min-width: 608px;
+  margin-top: 40px;
+}
+
+.cardsList {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.mainContainer {
+  display: flex;
+  padding-top: 124px;
+  max-width: 320px;
+  padding-right: 60px;
+  box-sizing: border-box;
+}
+
+.navLinkContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  align-items: flex-start;
+}
+
+.navProfile {
+  color: #8585ad;
+  text-decoration: none;
+  height: 64px;
+}
+
+.activeNavProfile {
+  color: #f2f2f3;
+}

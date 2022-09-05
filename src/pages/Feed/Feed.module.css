@@ -7,12 +7,47 @@
   display: flex;
 }
 
+.doneOrderNumber {
+  list-style-type: none;
+  margin-right: 8px;
+}
+
+.doneOrdersWrapper {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  max-height: 250px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.doneOrders {
+  width: 272px;
+  overflow: hidden;
+}
+
+.onTheGoOrders {
+  width: 272px;
+}
+
 .containersWrapper {
   display: flex;
 }
 
 .cardItem {
   list-style-type: none;
+  max-width: 584px;
+  /* interface/modal-bg */
+
+  background: #1c1c21;
+  /* interface/accent */
+
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .statsContainer {
@@ -38,12 +73,32 @@
 
 .cardsList {
   width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
-.image {
+.iconsContainer {
+  display: flex;
+}
+
+.iconWrapper {
   width: 64px;
   height: 64px;
   border-radius: 100px;
+  border: 3px rgb(84 69 244) solid;
+  box-sizing: border-box;
+  margin-left: -20px;
+  background-color: #1c1c21;
+}
+
+.iconWrapper:first-of-type {
+  margin-left: 0;
+}
+
+.image {
+  width: 100%;
+  height: 58px;
+  object-fit: cover;
 }
 
 .priceContainer {
@@ -63,4 +118,39 @@
 
 .doneOrderNumber {
   color: #00cccc;
+}
+
+.inWorkOrderNumber {
+  color: #f2f2f3;
+  list-style-type: none;
+}
+
+.wrapperForScroll {
+  height: calc(100vh - 229px);
+  overflow-y: scroll;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wrapperForScroll::-webkit-scrollbar {
+  width: 8px; /* ширина для вертикального скролла */
+  background-color: #2f2f37;
+}
+
+/* ползунок скроллбара */
+.wrapperForScroll::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+
+.wrapperForScroll::-webkit-scrollbar-thumb:hover {
+  background-color: #2f2f37;
+}
+
+.cardWrapper {
+  text-decoration: none;
+  color: #f2f2f3;
 }

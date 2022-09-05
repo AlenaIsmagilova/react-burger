@@ -52,7 +52,6 @@ const IngredientDetails = () => {
         </div>
         <div className={styles.nutritionInfoContainer}>
           <h3 className={`text text_type_main-default ${styles.nutritionInfo}`}>
-            {" "}
             Жиры, г
           </h3>
           <p

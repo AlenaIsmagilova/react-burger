@@ -4,7 +4,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Redirect, useHistory, useLocation } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { logOut, updateUser } from "../../services/actions/authActions";
 import styles from "../Profile/Profile.module.css";

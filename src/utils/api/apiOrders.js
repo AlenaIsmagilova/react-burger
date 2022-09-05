@@ -1,5 +1,6 @@
 import { checkResponse } from "./api.js";
 import { baseUrl } from "../../constants/constants.js";
+import { wsOwnOrdersUrl } from "../../constants/constants.js";
 
 const ApiOrders = {
   baseUrl: baseUrl,
