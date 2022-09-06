@@ -4,15 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "../Profile/Orders.module.css";
 import { logOut } from "../../services/actions/authActions";
 import FeedCard from "../../components/FeedCard/FeedCard";
-import {
-  WS_OWN_ORDERS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../../services/actions/wsActions";
+import { wsActions } from "../../services/actions/wsActions";
+import { getCookie } from "../../utils/helpers";
 
 const Orders = () => {
   const dispatch = useDispatch();
   const refreshToken = useSelector((store) => store.userReducer.refreshToken);
   const orders = useSelector((store) => store.wsReducer.ownMessages);
+  const clearToken = getCookie("accessToken").replace("Bearer ", "");
 
   const onClick = (e) => {
     e.preventDefault();
@@ -20,11 +19,14 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    dispatch({ type: WS_OWN_ORDERS_CONNECTION_START });
+    dispatch({
+      type: wsActions.wsWithTokenStart,
+      payload: `wss://norma.nomoreparties.space/orders?token=${clearToken}`,
+    });
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch({ type: wsActions.wsClosed });
     };
-  }, [dispatch]);
+  }, [dispatch, clearToken]);
 
   if (orders.length === 0) return null;
 
@@ -66,9 +68,9 @@ const Orders = () => {
       <div className={`${styles.ordersContainer}`}>
         <ul className={styles.cardsList}>
           <div className={styles.wrapperForScroll}>
-            {orders.map((order, index) => (
-              <FeedCard order={order} key={`${order._id}${index}`} />
-            ))}
+            {orders
+              .map((order) => <FeedCard order={order} key={order._id} />)
+              .reverse()}
           </div>
         </ul>
       </div>

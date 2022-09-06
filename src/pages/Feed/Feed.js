@@ -1,11 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../../services/actions/wsActions";
 import styles from "../Feed/Feed.module.css";
 import FeedCard from "../../components/FeedCard/FeedCard";
+import { wsActions } from "../../services/actions/wsActions";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -14,9 +11,12 @@ const Feed = () => {
   const totalToday = useSelector((store) => store.wsReducer.totalToday);
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
+    dispatch({
+      type: wsActions.wsStart,
+      payload: "wss://norma.nomoreparties.space/orders/all",
+    });
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch({ type: wsActions.wsClosed });
     };
   }, [dispatch]);
 
@@ -32,8 +32,8 @@ const Feed = () => {
           <div className={`${styles.ordersContainer} mr-15`}>
             <ul className={styles.cardsList}>
               <div className={styles.wrapperForScroll}>
-                {orders.map((order, index) => (
-                  <FeedCard order={order} key={`${order._id}${index}`} />
+                {orders.map((order) => (
+                  <FeedCard order={order} key={order._id} />
                 ))}
               </div>
             </ul>
@@ -45,9 +45,9 @@ const Feed = () => {
                 <ul className={styles.doneOrdersWrapper}>
                   {orders
                     .filter((item) => item.status === "done")
-                    .map((order, index) => (
+                    .map((order) => (
                       <li
-                        key={index}
+                        key={order._id}
                         className={`${styles.doneOrderNumber} text text_type_digits-default`}
                       >
                         {order.number}
@@ -59,9 +59,9 @@ const Feed = () => {
                 <h3 className="text text_type_main-medium mb-6">В работе:</h3>
                 {orders
                   .filter((item) => item.status === "pending")
-                  .map((order, index) => (
+                  .map((order) => (
                     <li
-                      key={index}
+                      key={order._id}
                       className={`${styles.inWorkOrderNumber} text text_type_digits-default`}
                     >
                       {order.number}

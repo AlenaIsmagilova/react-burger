@@ -7,13 +7,10 @@ import {
   useParams,
   useRouteMatch,
 } from "react-router-dom";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-  WS_OWN_ORDERS_CONNECTION_START,
-} from "../../services/actions/wsActions";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../FeedDetails/FeedDetails.module.css";
+import { wsActions } from "../../services/actions/wsActions";
+import { getCookie } from "../../utils/helpers";
 
 const FeedDetails = () => {
   const params = useParams();
@@ -23,6 +20,7 @@ const FeedDetails = () => {
   const match = useRouteMatch();
   const profileRoute = "/profile/orders/:id";
   const feedRoute = "/feed/:id";
+  const clearToken = getCookie("accessToken").replace("Bearer ", "");
 
   const allOrders = useSelector((store) => store.wsReducer.messages);
   const ownOrders = useSelector((store) => store.wsReducer.ownMessages);
@@ -42,15 +40,28 @@ const FeedDetails = () => {
       history.replace({ pathname: location.pathname });
     if (!currentOrder) {
       if (match.path === profileRoute) {
-        dispatch({ type: WS_OWN_ORDERS_CONNECTION_START });
+        dispatch({
+          type: wsActions.wsWithTokenStart,
+          payload: `wss://norma.nomoreparties.space/orders?token=${clearToken}`,
+        });
       } else if (match.path === feedRoute) {
-        dispatch({ type: WS_CONNECTION_START });
+        dispatch({
+          type: wsActions.wsStart,
+          payload: "wss://norma.nomoreparties.space/orders/all",
+        });
       }
       return () => {
-        dispatch({ type: WS_CONNECTION_CLOSED });
+        dispatch({ type: wsActions.wsClosed });
       };
     }
-  }, [dispatch, history, location.pathname, match.path, currentOrder]);
+  }, [
+    dispatch,
+    history,
+    location.pathname,
+    match.path,
+    currentOrder,
+    clearToken,
+  ]);
 
   const getCreatedAt = (dirtyDate) => {
     return `${dayjs(dirtyDate)

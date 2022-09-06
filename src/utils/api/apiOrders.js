@@ -1,11 +1,12 @@
 import { checkResponse } from "./api.js";
 import { baseUrl } from "../../constants/constants.js";
-import { wsOwnOrdersUrl } from "../../constants/constants.js";
+import { getCookie } from "../helpers/index.js";
 
 const ApiOrders = {
   baseUrl: baseUrl,
   headers: {
     "Content-Type": "application/json",
+    Authorization: getCookie("accessToken"),
   },
 };
 

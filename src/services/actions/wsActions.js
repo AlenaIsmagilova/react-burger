@@ -7,3 +7,14 @@ export const WS_SEND_MESSAGE = "WS_SEND_MESSAGE"; //для отправки со
 
 export const WS_OWN_ORDERS_CONNECTION_START = "WS_OWN_ORDERS_CONNECTION_START";
 export const WS_GET_OWN_ORDERS_MESSAGE = "WS_GET_OWN_ORDERS_MESSAGE";
+
+export const wsActions = {
+  wsStart: WS_CONNECTION_START,
+  wsError: WS_CONNECTION_ERROR,
+  wsSuccess: WS_CONNECTION_SUCCESS,
+  wsClosed: WS_CONNECTION_CLOSED,
+  wsGetMessage: WS_GET_MESSAGE,
+  wsSendMessage: WS_SEND_MESSAGE,
+  wsWithTokenStart: WS_OWN_ORDERS_CONNECTION_START,
+  wsWithTokenGetMessage: WS_GET_OWN_ORDERS_MESSAGE,
+};

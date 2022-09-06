@@ -28,13 +28,13 @@ const Profile = () => {
     if (isLogedIn) {
       setValues({ ...values, name, email });
     }
-  }, [isLogedIn]);
+  }, [isLogedIn, history, email, name, values, setValues]);
 
   useEffect(() => {
     if (!isLogedIn) {
       history.replace({ pathname: "/login" });
     }
-  }, [isLogedIn]);
+  }, [isLogedIn, history]);
 
   const onClick = (e) => {
     e.preventDefault();
