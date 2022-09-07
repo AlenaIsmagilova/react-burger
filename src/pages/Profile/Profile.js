@@ -28,7 +28,7 @@ const Profile = () => {
     if (isLogedIn) {
       setValues({ ...values, name, email });
     }
-  }, [isLogedIn, history, email, name, values, setValues]);
+  }, [isLogedIn]);
 
   useEffect(() => {
     if (!isLogedIn) {

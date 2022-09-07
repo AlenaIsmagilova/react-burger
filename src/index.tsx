@@ -12,6 +12,7 @@ import thunk from "redux-thunk";
 import { rootReducer } from "../src/services/reducers/index.js";
 import { Provider } from "react-redux";
 import socketMiddleware from "./services/middleware/socketMiddleware";
+import { wsActions } from "./services/actions/wsActions";
 
 const composeEnhancers =
   typeof window === "object" &&
@@ -22,7 +23,7 @@ const composeEnhancers =
 const enhancer = composeEnhancers(
   applyMiddleware(
     thunk,
-    socketMiddleware()
+    socketMiddleware(wsActions)
     // socketMiddleware("wss://norma.nomoreparties.space/orders")
   )
 );

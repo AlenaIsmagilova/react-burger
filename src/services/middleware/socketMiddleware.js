@@ -1,6 +1,4 @@
-import { wsActions } from "../actions/wsActions.js";
-
-const socketMiddleware = () => {
+const socketMiddleware = (wsActions) => {
   return function (store) {
     let socket = null;
 
@@ -8,9 +6,17 @@ const socketMiddleware = () => {
       return function (action) {
         const { dispatch } = store;
         const { type, payload } = action;
-        const isWsConnectionStart = type === wsActions.wsStart;
-        const isWsWithTokenConnectionStart =
-          type === wsActions.wsWithTokenStart;
+        const {
+          wsStart,
+          wsError,
+          wsSuccess,
+          wsClosed,
+          wsGetMessage,
+          wsWithTokenStart,
+          wsWithTokenGetMessage,
+        } = wsActions;
+        const isWsConnectionStart = type === wsStart;
+        const isWsWithTokenConnectionStart = type === wsWithTokenStart;
 
         if (isWsConnectionStart || isWsWithTokenConnectionStart) {
           // объект класса WebSocket
@@ -18,9 +24,7 @@ const socketMiddleware = () => {
           socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
             dispatch({
-              type: isWsConnectionStart
-                ? wsActions.wsGetMessage
-                : wsActions.wsWithTokenGetMessage,
+              type: isWsConnectionStart ? wsGetMessage : wsWithTokenGetMessage,
               payload: data,
             });
           };
@@ -29,13 +33,13 @@ const socketMiddleware = () => {
         if (socket) {
           // функция, которая вызывается при открытии сокета
           socket.onopen = (event) => {
-            dispatch({ type: wsActions.wsSuccess, payload: event });
+            dispatch({ type: wsSuccess, payload: event });
           };
           socket.onerror = (event) => {
-            dispatch({ type: wsActions.wsError, payload: event });
+            dispatch({ type: wsError, payload: event });
           };
           socket.onclose = (event) => {
-            dispatch({ type: wsActions.wsClosed, payload: event });
+            dispatch({ type: wsClosed, payload: event });
           };
         }
         next(action);

@@ -14,7 +14,6 @@ export const wsActions = {
   wsSuccess: WS_CONNECTION_SUCCESS,
   wsClosed: WS_CONNECTION_CLOSED,
   wsGetMessage: WS_GET_MESSAGE,
-  wsSendMessage: WS_SEND_MESSAGE,
   wsWithTokenStart: WS_OWN_ORDERS_CONNECTION_START,
   wsWithTokenGetMessage: WS_GET_OWN_ORDERS_MESSAGE,
 };
