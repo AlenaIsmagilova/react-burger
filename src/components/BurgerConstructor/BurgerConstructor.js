@@ -17,9 +17,11 @@ import {
   DELETE_INGREDIENT_IN_BURGER,
 } from "../../services/actions/actions.js";
 import BurgerConstructorAddedItem from "../BurgerConstructorAddedItem/BurgerConstructorAddedItem.js";
+import { getCookie } from "../../utils/helpers";
 
 const BurgerConstructor = () => {
   const history = useHistory();
+  const accessToken = getCookie("accessToken");
   const currentIngredientInBurger = useSelector(
     (store) => store.burgerConstructorReducer.currentIngredientIntoBurgerItems
   );
@@ -103,7 +105,7 @@ const BurgerConstructor = () => {
     if (userIsLogedIn) {
       dispatch({ type: RESET_ORDER_DETAILS });
       dispatch({ type: SET_ORDER_MODAL_ACTIVE });
-      dispatch(getOrderDetails(prepareIngredientsId));
+      dispatch(getOrderDetails(prepareIngredientsId, accessToken));
     } else {
       return history.push("/login");
     }

@@ -1,19 +1,17 @@
 import { checkResponse } from "./api.js";
 import { baseUrl } from "../../constants/constants.js";
-import { getCookie } from "../helpers/index.js";
 
 const ApiOrders = {
   baseUrl: baseUrl,
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: getCookie("accessToken"),
-  },
 };
 
-export function createOrderApi(ingredients) {
+export function createOrderApi(ingredients, token) {
   return fetch(`${ApiOrders.baseUrl}orders`, {
     method: "POST",
-    headers: ApiOrders.headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
     body: JSON.stringify({ ingredients }),
   })
     .then(checkResponse)

@@ -20,7 +20,7 @@ const FeedDetails = () => {
   const match = useRouteMatch();
   const profileRoute = "/profile/orders/:id";
   const feedRoute = "/feed/:id";
-  const clearToken = getCookie("accessToken").replace("Bearer ", "");
+  const clearToken = getCookie("accessToken")?.replace("Bearer ", "");
 
   const allOrders = useSelector((store) => store.wsReducer.messages);
   const ownOrders = useSelector((store) => store.wsReducer.ownMessages);
@@ -54,14 +54,7 @@ const FeedDetails = () => {
         dispatch({ type: wsActions.wsClosed });
       };
     }
-  }, [
-    dispatch,
-    history,
-    location.pathname,
-    match.path,
-    currentOrder,
-    clearToken,
-  ]);
+  }, [dispatch, history, location.pathname, match.path, currentOrder]);
 
   const getCreatedAt = (dirtyDate) => {
     return `${dayjs(dirtyDate)
