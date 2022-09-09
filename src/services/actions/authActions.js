@@ -6,7 +6,9 @@ import {
   updateTokenApi,
   updateUserApi,
 } from "../../utils/api/api";
+import { getOwnOrdersApi } from "../../utils/api/apiOrders";
 import { deleteCookie, getCookie, setCookie } from "../../utils/helpers";
+import { WS_CONNECTION_SUCCESS } from "./wsActions";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -91,23 +93,33 @@ export const authUser = () => {
         });
       })
       .catch((error) => {
-        console.error("Error in getUserApi", error);
+        console.error("Error in authUser", error);
         const JWT_expired = "jwt expired";
         if (error.message === JWT_expired) {
-          return updateTokenApi().then((res) => {
-            setCookie("accessToken", res.accessToken);
-            setCookie("refreshToken", res.refreshToken);
-            return getUser().then((res) => {
+          return updateTokenApi()
+            .then((res) => {
+              setCookie("accessToken", res.accessToken);
+              setCookie("refreshToken", res.refreshToken);
+              return getUser()
+                .then((res) => {
+                  return dispatch({
+                    type: LOGIN_SUCCESS,
+                    payload: {
+                      user: res.user,
+                      accessToken: getCookie("accessToken"),
+                      refreshToken: getCookie("refreshToken"),
+                    },
+                  });
+                })
+                .catch(() => {
+                  return dispatch({ type: LOGOUT_FAILED });
+                });
+            })
+            .catch(() => {
               return dispatch({
-                type: LOGIN_SUCCESS,
-                payload: {
-                  user: res.user,
-                  accessToken: getCookie("accessToken"),
-                  refreshToken: getCookie("refreshToken"),
-                },
+                type: LOGIN_FAILED,
               });
             });
-          });
         } else {
           deleteCookie("accessToken");
           deleteCookie("refreshToken");

@@ -3,15 +3,15 @@ import { baseUrl } from "../../constants/constants.js";
 
 const ApiOrders = {
   baseUrl: baseUrl,
-  headers: {
-    "Content-Type": "application/json",
-  },
 };
 
-export function createOrderApi(ingredients) {
+export function createOrderApi(ingredients, token) {
   return fetch(`${ApiOrders.baseUrl}orders`, {
     method: "POST",
-    headers: ApiOrders.headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
     body: JSON.stringify({ ingredients }),
   })
     .then(checkResponse)

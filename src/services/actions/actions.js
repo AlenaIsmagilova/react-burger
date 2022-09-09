@@ -55,12 +55,12 @@ export const getBurgerIngredientsItems = (ingredients) => {
   };
 };
 
-export const getOrderDetails = (ingredientsId) => {
+export const getOrderDetails = (ingredientsId, token) => {
   return function (dispatch) {
     dispatch({
       type: GET_ORDER_DETAILS_REQUEST,
     });
-    createOrderApi(ingredientsId)
+    createOrderApi(ingredientsId, token)
       .then((res) => {
         dispatch({
           type: GET_ORDER_DETAILS_SUCCESS,
