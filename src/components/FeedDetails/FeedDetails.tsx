@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import dayjs from "dayjs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../../utils/types";
 import {
   useHistory,
   useLocation,
@@ -11,9 +12,15 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import styles from "../FeedDetails/FeedDetails.module.css";
 import { wsActions } from "../../services/actions/wsActions";
 import { getCookie } from "../../utils/helpers";
+import { TIngredientItem } from "../BurgerIngredients/types";
+import { TIngredient } from "../BurgerConstructor/types";
+
+interface IParams {
+  id: string;
+}
 
 const FeedDetails = () => {
-  const params = useParams();
+  const params = useParams<IParams>();
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -29,10 +36,12 @@ const FeedDetails = () => {
   );
 
   const orders = match.path === profileRoute ? ownOrders : allOrders;
-  const currentOrder = useMemo(() =>
-    orders.find((item) => {
-      return item._id === params.id;
-    })
+  const currentOrder = useMemo(
+    () =>
+      orders.find((item) => {
+        return item._id === params.id;
+      }),
+    [orders, params.id]
   );
 
   useEffect(() => {
@@ -54,16 +63,23 @@ const FeedDetails = () => {
         dispatch({ type: wsActions.wsClosed });
       };
     }
-  }, [dispatch, history, location.pathname, match.path, currentOrder]);
+  }, [
+    dispatch,
+    history,
+    location.pathname,
+    match.path,
+    currentOrder,
+    clearToken,
+  ]);
 
-  const getCreatedAt = (dirtyDate) => {
+  const getCreatedAt = (dirtyDate: string) => {
     return `${dayjs(dirtyDate)
       .format("[Сегодня, ]hh:mm, [i-GMT]Z")
       .toString()}`;
   };
 
   const orderStatus = () => {
-    if (currentOrder.status === "done") {
+    if (currentOrder?.status === "done") {
       return "Выполнен";
     } else {
       return "В работе";
@@ -72,34 +88,38 @@ const FeedDetails = () => {
 
   const uniqueIngredientIds = useMemo(
     () => Array.from(new Set(currentOrder?.ingredients)),
-    [orders]
+    [currentOrder?.ingredients]
   );
 
-  const ingredientDesc = useMemo(() =>
-    uniqueIngredientIds.map((ingredientId) => {
-      const { image_mobile, name, price, type } = ingredients.find(
-        (item) => item._id === ingredientId
-      );
-      return {
-        srcImage: image_mobile,
-        name: name,
-        id: ingredientId,
-        price: price,
-        type: type,
-      };
-    })
+  const ingredientDesc = useMemo(
+    () =>
+      uniqueIngredientIds.map((ingredientId) => {
+        const { image_mobile, name, price, type } = ingredients.find(
+          (item) => item._id === ingredientId
+        );
+        return {
+          srcImage: image_mobile,
+          name: name,
+          id: ingredientId,
+          price: price,
+          type: type,
+        };
+      }),
+    [uniqueIngredientIds, ingredients]
   );
 
-  const quantityOfIngredient = (ingredient) => {
-    return currentOrder.ingredients.filter((item) => {
-      return item === ingredient.id;
+  const quantityOfIngredient = (ingredient: TIngredientItem) => {
+    return currentOrder?.ingredients.filter((item) => {
+      return item === ingredient._id;
     }).length;
   };
 
-  const totalCost = useMemo(() =>
-    currentOrder?.ingredients
-      .map((id) => ingredients.find((item) => id === item._id))
-      .reduce((sum, current) => sum + current.price, 0)
+  const totalCost = useMemo(
+    () =>
+      currentOrder?.ingredients
+        .map((id) => ingredients.find((item) => id === item._id))
+        .reduce((sum, current: any) => sum + current.price, 0),
+    [currentOrder?.ingredients, ingredients]
   );
 
   if (!currentOrder) return null;
@@ -154,7 +174,7 @@ const FeedDetails = () => {
                       {quantityOfIngredient(item)}
                       &nbsp;x&nbsp;{item.price}
                     </p>
-                    <CurrencyIcon />
+                    <CurrencyIcon type="primary" />
                   </div>
                 </li>
               );

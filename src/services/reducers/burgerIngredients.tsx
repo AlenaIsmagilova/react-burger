@@ -9,11 +9,10 @@ import {
   SET_INGREDIENTS_MODAL_INACTIVE,
   TActions,
 } from "../actions/actions";
-import { TIngredient } from "../../components/BurgerConstructor/types";
 import { TIngredientItem } from "../../components/BurgerIngredients/types";
 
 export type TState = {
-  ingredientItems?: TIngredientItem[];
+  ingredientItems: TIngredientItem[];
   isLoading: boolean;
   error: boolean;
   currentIngredients: string;

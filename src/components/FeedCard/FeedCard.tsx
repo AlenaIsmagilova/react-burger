@@ -1,11 +1,10 @@
-import { Link, useLocation, useRouteMatch } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../pages/Feed/Feed.module.css";
 import { useSelector } from "../../utils/types";
 import dayjs from "dayjs";
 import { FC, useMemo } from "react";
 import { TWsOrder } from "../../utils/types";
-import { TIngredient } from "../BurgerConstructor/types";
 
 interface IFeedCard {
   order: TWsOrder;
@@ -23,23 +22,26 @@ const FeedCard: FC<IFeedCard> = ({ order }) => {
       .toString()}`;
   };
 
-  const uniqueIngredientIds = useMemo(() =>
-    Array.from(new Set(order.ingredients))
+  const uniqueIngredientIds = useMemo(
+    () => Array.from(new Set(order.ingredients)),
+    [order.ingredients]
   );
 
   const ingredientIcons = uniqueIngredientIds.map((ingredient) => {
     return {
       srcImage: ingredients.find((item) => item._id === ingredient)
-        .image_mobile,
-      name: ingredients.find((item) => item._id === ingredient).name,
-      price: ingredients.find((item) => item._id === ingredient).price,
+        ?.image_mobile,
+      name: ingredients.find((item) => item._id === ingredient)?.name,
+      price: ingredients.find((item) => item._id === ingredient)?.price,
     };
   });
 
-  const totalCost = useMemo(() =>
-    order?.ingredients
-      .map((id) => ingredients.find((item) => id === item._id))
-      .reduce((sum, current) => sum + current.price, 0)
+  const totalCost = useMemo(
+    () =>
+      order?.ingredients
+        .map((id) => ingredients.find((item) => id === item._id))
+        .reduce((sum, current: any) => sum + current.price, 0),
+    [ingredients, order?.ingredients]
   );
 
   return (
