@@ -7,10 +7,22 @@ import {
   SET_INGREDIENTS_MODAL_ACTIVE,
   SET_ORDER_MODAL_INACTIVE,
   SET_INGREDIENTS_MODAL_INACTIVE,
-} from "../actions/actions.js";
+  TActions,
+} from "../actions/actions";
+import { TIngredient } from "../../components/BurgerConstructor/types";
+import { TIngredientItem } from "../../components/BurgerIngredients/types";
+
+export type TState = {
+  ingredientItems?: TIngredientItem[];
+  isLoading: boolean;
+  error: boolean;
+  currentIngredients: string;
+  isOrderModalOpen: boolean;
+  isIngredientsModalOpen: boolean;
+};
 
 //начальное состояние
-export const initialState = {
+export const initialState: TState = {
   ingredientItems: [],
   isLoading: false,
   error: false,
@@ -20,7 +32,10 @@ export const initialState = {
 };
 
 // редьюсер, который возвращает обновленный стейт, принимая на вход стейт и экшн
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (
+  state = initialState,
+  action: TActions
+): TState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

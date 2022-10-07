@@ -7,7 +7,7 @@ import {
 import { useEffect } from "react";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../../services/actions/authActions.js";
+import { signIn } from "../../services/actions/authActions";
 import styles from "../SignIn/SignIn.module.css";
 
 const SignIn = () => {

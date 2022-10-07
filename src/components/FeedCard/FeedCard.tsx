@@ -1,17 +1,23 @@
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../pages/Feed/Feed.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/types";
 import dayjs from "dayjs";
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
+import { TWsOrder } from "../../utils/types";
+import { TIngredient } from "../BurgerConstructor/types";
 
-const FeedCard = ({ order }) => {
+interface IFeedCard {
+  order: TWsOrder;
+}
+
+const FeedCard: FC<IFeedCard> = ({ order }) => {
   const location = useLocation();
   const ingredients = useSelector(
     (store) => store.burgerIngredientsReducer.ingredientItems
   );
 
-  const getCreatedAt = (dirtyDate) => {
+  const getCreatedAt = (dirtyDate: string) => {
     return `${dayjs(dirtyDate)
       .format("[Сегодня, ]hh:mm, [i-GMT]Z")
       .toString()}`;

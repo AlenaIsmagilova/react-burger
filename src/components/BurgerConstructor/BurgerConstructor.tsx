@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, FC } from "react";
 import { useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
 import {
@@ -8,29 +8,31 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderDetails } from "../../services/actions/actions.js";
+import { getOrderDetails } from "../../services/actions/actions";
 import {
   RESET_ORDER_DETAILS,
   SET_ORDER_MODAL_ACTIVE,
   ADD_INGREDIENT_IN_BURGER,
   ADD_BUN_IN_BURGER,
   DELETE_INGREDIENT_IN_BURGER,
-} from "../../services/actions/actions.js";
-import BurgerConstructorAddedItem from "../BurgerConstructorAddedItem/BurgerConstructorAddedItem.js";
+} from "../../services/actions/actions";
+import BurgerConstructorAddedItem from "../BurgerConstructorAddedItem/BurgerConstructorAddedItem";
 import { getCookie } from "../../utils/helpers";
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
   const history = useHistory();
   const accessToken = getCookie("accessToken");
-  const currentIngredientInBurger = useSelector(
+  const currentIngredientInBurger: any = useSelector<any>(
     (store) => store.burgerConstructorReducer.currentIngredientIntoBurgerItems
   );
 
-  const currentBunInBurger = useSelector(
+  const currentBunInBurger: any = useSelector<any>(
     (store) => store.burgerConstructorReducer.bunInrgedientsOnly
   );
 
-  const userIsLogedIn = useSelector((store) => store.userReducer.isLogedIn);
+  const userIsLogedIn: any = useSelector<any>(
+    (store) => store.userReducer.isLogedIn
+  );
 
   const handleTotalPrice = () => {
     let totalCostBuns = 0;
@@ -38,7 +40,7 @@ const BurgerConstructor = () => {
 
     if (currentIngredientInBurger.length > 0) {
       totalCostIngredients = currentIngredientInBurger.reduce(
-        (sum, current) => {
+        (sum: any, current: any) => {
           return sum + current.price;
         },
         0
@@ -65,7 +67,7 @@ const BurgerConstructor = () => {
     },
   });
 
-  const addIngredientsInBurger = (ingredient) => {
+  const addIngredientsInBurger = (ingredient: any) => {
     if (ingredient.type === "sauce" || ingredient.type === "main") {
       dispatch({
         type: ADD_INGREDIENT_IN_BURGER,
@@ -74,7 +76,7 @@ const BurgerConstructor = () => {
     }
   };
 
-  const addBunInBurger = (ingredient) => {
+  const addBunInBurger = (ingredient: any) => {
     if (ingredient.type === "bun") {
       dispatch({
         type: ADD_BUN_IN_BURGER,
@@ -83,19 +85,21 @@ const BurgerConstructor = () => {
     }
   };
 
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
 
-  const { currentIngredientIntoBurgerItems } = useSelector((store) => {
-    return store.burgerConstructorReducer;
-  });
+  const { currentIngredientIntoBurgerItems }: any = useSelector<any>(
+    (store) => {
+      return store.burgerConstructorReducer;
+    }
+  );
 
-  const ingredients = useSelector(
+  const ingredients: any = useSelector<{ [key: string]: any }>(
     (store) => store.burgerIngredientsReducer.ingredientItems
   );
 
   const prepareIngredientsId = useMemo(
     () =>
-      ingredients.map((ingredient) => {
+      ingredients.map((ingredient: any) => {
         return ingredient._id;
       }),
     [ingredients]
@@ -111,7 +115,7 @@ const BurgerConstructor = () => {
     }
   };
 
-  const handleDeleteIngredient = (ingredient) => {
+  const handleDeleteIngredient = (ingredient: any) => {
     dispatch({ type: DELETE_INGREDIENT_IN_BURGER, payload: ingredient });
   };
 
@@ -148,14 +152,16 @@ const BurgerConstructor = () => {
               />
             )}
             <div className={styles.wrapperForScroll}>
-              {currentIngredientIntoBurgerItems.map((ingredient, index) => (
-                <BurgerConstructorAddedItem
-                  key={ingredient.onlyFrontId}
-                  item={ingredient}
-                  index={index}
-                  handleClose={() => handleDeleteIngredient(ingredient)}
-                />
-              ))}
+              {currentIngredientIntoBurgerItems.map(
+                (ingredient: any, index: any) => (
+                  <BurgerConstructorAddedItem
+                    key={ingredient.onlyFrontId}
+                    item={ingredient}
+                    index={index}
+                    handleClose={() => handleDeleteIngredient(ingredient)}
+                  />
+                )
+              )}
             </div>
             {currentBunInBurger._id && (
               <ConstructorElement
@@ -178,6 +184,7 @@ const BurgerConstructor = () => {
                   type="primary"
                   size="large"
                   onClick={() => handleOpen()}
+                  htmlType="button"
                 >
                   Оформить заказ
                 </Button>

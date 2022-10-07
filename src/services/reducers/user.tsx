@@ -1,3 +1,4 @@
+import { TUser } from "../../utils/types";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -11,9 +12,19 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED,
-} from "../actions/authActions.js";
+  TAuthActions,
+} from "../actions/authActions";
 
-export const initialState = {
+export type TState = {
+  isLoading: boolean;
+  error: boolean;
+  isLogedIn: boolean;
+  accessToken: string | undefined;
+  refreshToken: string | undefined;
+  currentUser: TUser;
+};
+
+export const initialState: TState = {
   isLoading: true,
   error: false,
   isLogedIn: false,
@@ -25,7 +36,10 @@ export const initialState = {
   },
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (
+  state = initialState,
+  action: TAuthActions
+): TState => {
   switch (action.type) {
     case LOGIN_REQUEST: {
       return {

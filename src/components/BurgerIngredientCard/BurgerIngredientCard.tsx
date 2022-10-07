@@ -1,18 +1,25 @@
 import styles from "../BurgerIngredientsItem/BurgerIngredientsItem.module.css";
-import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
-import { useMemo } from "react";
+import { useSelector } from "../../utils/types";
+import { useMemo, FC } from "react";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useLocation } from "react-router-dom";
-import ingredientType from "../../utils/types";
+import { TIngredient } from "../BurgerConstructor/types";
+import { useLocation, Link } from "react-router-dom";
 
-const BurgerIngredientCard = ({ ingredient, openModal }) => {
+interface IBurgerIngredientCardProps {
+  ingredient: TIngredient;
+  openModal: (ingredient: TIngredient) => void;
+}
+
+const BurgerIngredientCard: FC<IBurgerIngredientCardProps> = ({
+  ingredient,
+  openModal,
+}) => {
   const location = useLocation();
-  const [{ isDragging }, dragRef] = useDrag({
+  const [, dragRef] = useDrag({
     type: "ingredient",
     item: ingredient,
     collect: (monitor) => ({
@@ -32,7 +39,7 @@ const BurgerIngredientCard = ({ ingredient, openModal }) => {
     () =>
       currentIngredientInBurger.filter((item) => item._id === ingredient._id)
         .length,
-    [currentIngredientInBurger]
+    [currentIngredientInBurger, ingredient._id]
   );
 
   const setCounter = () => {
@@ -43,9 +50,7 @@ const BurgerIngredientCard = ({ ingredient, openModal }) => {
     ) {
       return 2;
     }
-    if (ingredient.type === "main" || ingredient.type === "sauce") {
-      return numberOfAddedIngredientsInBurger;
-    }
+    return numberOfAddedIngredientsInBurger;
   };
 
   return (
@@ -85,9 +90,9 @@ const BurgerIngredientCard = ({ ingredient, openModal }) => {
   );
 };
 
-BurgerIngredientCard.propTypes = {
-  ingredient: ingredientType,
-  openModal: PropTypes.func,
-};
+// BurgerIngredientCard.propTypes = {
+//   ingredient: ingredientType,
+//   openModal: PropTypes.func,
+// };
 
 export default BurgerIngredientCard;

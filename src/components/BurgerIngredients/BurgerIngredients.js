@@ -2,7 +2,7 @@ import { useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
-import BurgerIngredientsItem from "../BurgerIngredientsItem/BurgerIngredientsItem.js";
+import BurgerIngredientsItem from "../BurgerIngredientsItem/BurgerIngredientsItem";
 import {
   SET_INGREDIENTS_ITEM_IN_MODAL,
   SET_NAV_INGREDIENTS,

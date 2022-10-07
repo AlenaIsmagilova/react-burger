@@ -21,14 +21,10 @@ const composeEnhancers =
     : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(
-    thunk,
-    socketMiddleware(wsActions)
-    // socketMiddleware("wss://norma.nomoreparties.space/orders")
-  )
+  applyMiddleware(thunk, socketMiddleware(wsActions))
 );
 
-const store = createStore(rootReducer, enhancer);
+export const store = createStore(rootReducer, enhancer);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

@@ -8,21 +8,21 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
-import AppHeader from "../AppHeader/AppHeader.js";
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.js";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.js";
+import AppHeader from "../AppHeader/AppHeader";
+import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
+import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import styles from "../../index.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getBurgerIngredientsItems } from "../../services/actions/actions.js";
-import SignUp from "../../pages/SignUp/SignUp.js";
-import SignIn from "../../pages/SignIn/SignIn.js";
-import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword.js";
-import ResetPassword from "../../pages/ResetPassword/ResetPassword.js";
-import Profile from "../../pages/Profile/Profile.js";
-import { authUser } from "../../services/actions/authActions.js";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
-import IngredientDetails from "../IngredientDetails/IngredientDetails.js";
-import Modal from "../Modal/Modal.js";
+import { getBurgerIngredientsItems } from "../../services/actions/actions";
+import SignUp from "../../pages/SignUp/SignUp";
+import SignIn from "../../pages/SignIn/SignIn";
+import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "../../pages/ResetPassword/ResetPassword";
+import Profile from "../../pages/Profile/Profile";
+import { authUser } from "../../services/actions/authActions";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import Modal from "../Modal/Modal";
 import {
   SET_INGREDIENTS_MODAL_INACTIVE,
   SET_ORDER_MODAL_INACTIVE,

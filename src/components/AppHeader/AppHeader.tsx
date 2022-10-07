@@ -6,8 +6,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, useLocation } from "react-router-dom";
 import styles from "./AppHeader.module.css";
+import { FC } from "react";
 
-function AppHeader() {
+const AppHeader: FC = () => {
   const location = useLocation();
   return (
     <header className={styles.header}>
@@ -78,6 +79,6 @@ function AppHeader() {
       </nav>
     </header>
   );
-}
+};
 
 export default AppHeader;

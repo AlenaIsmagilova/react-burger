@@ -4,16 +4,28 @@ import {
   ADD_BUN_IN_BURGER,
   MOVE_INGREDIENTS,
   RESET_CONSTRUCTOR_AFTER_ORDER,
-} from "../actions/actions.js";
+} from "../actions/actions";
+import { TActions } from "../actions/actions";
+import { TIngredient } from "../../components/BurgerConstructor/types";
+
+export type TState = {
+  currentIngredientIntoBurgerItems: ReadonlyArray<TIngredient>;
+  bunInrgedientsOnly: TIngredient;
+  readonly count: number;
+};
 
 //начальное состояние
-export const initialState = {
+export const initialState: TState = {
   currentIngredientIntoBurgerItems: [],
-  bunInrgedientsOnly: {},
+  bunInrgedientsOnly: {} as TIngredient,
+  count: 0,
 };
 
 // редьюсер, который возвращает обновленный стейт, принимая на вход стейт и экшн
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (
+  state = initialState,
+  action: TActions
+): TState => {
   // action = { type:SET_CURRENT_INGREDIENT_IN_BURGER, payload: res.data }
   switch (action.type) {
     case ADD_INGREDIENT_IN_BURGER: {

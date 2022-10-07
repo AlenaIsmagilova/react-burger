@@ -3,15 +3,25 @@ import {
   GET_ORDER_DETAILS_SUCCESS,
   GET_ORDER_DETAILS_FAILED,
   RESET_ORDER_DETAILS,
+  TActions,
 } from "../actions/actions";
 
-const initialState = {
+export type TState = {
+  orderNumber: number;
+  isLoading: boolean;
+  error: boolean;
+};
+
+const initialState: TState = {
   orderNumber: 0,
   isLoading: false,
   error: false,
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (
+  state = initialState,
+  action: TActions
+): TState => {
   switch (action.type) {
     case GET_ORDER_DETAILS_REQUEST: {
       return {

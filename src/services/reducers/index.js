@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import { burgerIngredientsReducer } from "../reducers/burgerIngredients.js";
-import { burgerConstructorReducer } from "../reducers/burgerConstructor.js";
-import { orderDetailsReducer } from "../reducers/orderDetails.js";
-import { ingredientsItemReducer } from "../reducers/burgerIngredientsItem.js";
-import { userReducer } from "./user.js";
-import wsReducer from "./wsReducer.js";
+import { burgerIngredientsReducer } from "../reducers/burgerIngredients";
+import { burgerConstructorReducer } from "../reducers/burgerConstructor";
+import { orderDetailsReducer } from "../reducers/orderDetails";
+import { ingredientsItemReducer } from "../reducers/burgerIngredientsItem";
+import { userReducer } from "./user";
+import wsReducer from "./wsReducer";
 
 export const rootReducer = combineReducers({
   burgerIngredientsReducer,

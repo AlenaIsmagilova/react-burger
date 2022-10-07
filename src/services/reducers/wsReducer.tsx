@@ -1,12 +1,24 @@
+import { TWsOrder, TWsResponse } from "../../utils/types";
 import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
   WS_GET_OWN_ORDERS_MESSAGE,
-} from "../actions/wsActions.js";
+  TWsActions,
+} from "../actions/wsActions";
 
-const initialState = {
+export type TState = {
+  isConnected: boolean;
+  isLoading: boolean;
+  messages: TWsOrder[];
+  ownMessages: TWsOrder[];
+  error: undefined | string;
+  total: null | number;
+  totalToday: null | number;
+};
+
+const initialState: TState = {
   isConnected: false,
   isLoading: true,
   messages: [],
@@ -16,7 +28,7 @@ const initialState = {
   totalToday: null,
 };
 
-const wsReducer = (state = initialState, action) => {
+const wsReducer = (state = initialState, action: TWsActions): TState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
