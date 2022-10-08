@@ -22,17 +22,17 @@ import Profile from "../../pages/Profile/Profile";
 import { authUser } from "../../services/actions/authActions";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import Modal from "../Modal/Modal";
+import Modal from "../Modal/Modal.tsx";
 import {
   SET_INGREDIENTS_MODAL_INACTIVE,
   SET_ORDER_MODAL_INACTIVE,
   RESET_CONSTRUCTOR_AFTER_ORDER,
 } from "../../services/actions/actions";
-import Feed from "../../pages/Feed/Feed.js";
-import FeedDetails from "../FeedDetails/FeedDetails.js";
-import Orders from "../../pages/Profile/Orders.js";
-import OrderDetails from "../OrderDetails/OrderDetails.js";
-import Spinner from "../Spinner/Spinner.js";
+import Feed from "../../pages/Feed/Feed";
+import FeedDetails from "../FeedDetails/FeedDetails";
+import Orders from "../../pages/Profile/Orders";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import Spinner from "../Spinner/Spinner";
 
 const App = () => {
   const dispatch = useDispatch();

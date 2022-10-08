@@ -1,11 +1,16 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/types";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import ingredientType from "../../utils/types";
 import styles from "../IngredientDetails/IngredientDetails.module.css";
+import { TIngredientItem } from "../BurgerIngredients/types";
+
+interface IParams {
+  id: string;
+}
 
 const IngredientDetails = () => {
-  const params = useParams();
+  const params = useParams<IParams>();
   const ingredients = useSelector(
     (store) => store.burgerIngredientsReducer.ingredientItems
   );
@@ -17,9 +22,9 @@ const IngredientDetails = () => {
   useEffect(() => {
     if (history.action === "POP")
       history.replace({ pathname: location.pathname });
-  }, []);
+  }, [history, location.pathname]);
 
-  const currIngr = ingredients.find((item) => {
+  const currIngr = ingredients.find((item: TIngredientItem) => {
     return item._id === params.id;
   });
 
@@ -27,7 +32,11 @@ const IngredientDetails = () => {
 
   return (
     <div className={styles.ingredientContainer}>
-      <img className={styles.ingredientImage} src={currIngr.image} />
+      <img
+        className={styles.ingredientImage}
+        src={currIngr.image}
+        alt={currIngr.name}
+      />
       <p className="mt-4 text text_type_main-medium">{currIngr.name}</p>
       <div className={`mt-8 mb-15 ${styles.ingredientNutrition}`}>
         <div className={styles.nutritionInfoContainer}>

@@ -1,5 +1,6 @@
 import { useMemo, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../../utils/types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import BurgerIngredientsItem from "../BurgerIngredientsItem/BurgerIngredientsItem";
@@ -8,6 +9,7 @@ import {
   SET_NAV_INGREDIENTS,
   SET_INGREDIENTS_MODAL_ACTIVE,
 } from "../../services/actions/actions";
+import { TIngredientItem } from "./types";
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
@@ -20,44 +22,45 @@ const BurgerIngredients = () => {
     (store) => store.burgerIngredientsReducer.currentIngredients
   );
 
-  const sauceDivEl = useRef(null);
-  const bunDivEl = useRef(null);
-  const mainDivEl = useRef(null);
+  const sauceDivEl = useRef<HTMLDivElement>(null);
+  const bunDivEl = useRef<HTMLDivElement>(null);
+  const mainDivEl = useRef<HTMLDivElement>(null);
 
-  const handleOpenModal = (ingredient) => {
+  const handleOpenModal = (ingredient: TIngredientItem) => {
     dispatch({ type: SET_INGREDIENTS_MODAL_ACTIVE });
     dispatch({ type: SET_INGREDIENTS_ITEM_IN_MODAL, payload: ingredient });
   };
 
-  const onSauceTabClick = (value) => {
+  const onSauceTabClick = (value: string) => {
     dispatch({ type: SET_NAV_INGREDIENTS, payload: value });
     if (value === "Соусы") {
-      sauceDivEl.current.scrollIntoView({ behavior: "smooth" });
+      sauceDivEl.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  const onBunTabClick = (value) => {
+  const onBunTabClick = (value: string) => {
     dispatch({ type: SET_NAV_INGREDIENTS, payload: value });
     if (value === "Булки") {
-      bunDivEl.current.scrollIntoView({ behavior: "smooth" });
+      bunDivEl.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  const onMainTabClick = (value) => {
+  const onMainTabClick = (value: string) => {
     dispatch({ type: SET_NAV_INGREDIENTS, payload: value });
     if (value === "Начинки") {
-      mainDivEl.current.scrollIntoView({ behavior: "smooth" });
+      mainDivEl.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  const tabsBlockEl = useRef(null);
+  const tabsBlockEl = useRef<HTMLDivElement>(null);
 
   const tabsBlockOnScroll = () =>
-    tabsBlockEl.current.getBoundingClientRect().bottom;
+    tabsBlockEl.current?.getBoundingClientRect().bottom;
 
-  const bunScroll = () => bunDivEl.current.getBoundingClientRect().top;
-  const mainScroll = () => mainDivEl.current.getBoundingClientRect().top;
-  const sauceScroll = () => sauceDivEl.current.getBoundingClientRect().top - 30;
+  const bunScroll = () => bunDivEl.current?.getBoundingClientRect().top;
+  const mainScroll = () => mainDivEl.current?.getBoundingClientRect().top;
+  const sauceScroll = () =>
+    sauceDivEl.current?.getBoundingClientRect().top - 30;
 
   const handleScroll = () => {
     if (tabsBlockOnScroll() > bunScroll()) {

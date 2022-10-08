@@ -2,9 +2,10 @@ import styles from "../OrderDetails/OrderDetails.module.css";
 import doneOrder from "../../images/done.svg";
 import PropTypes from "prop-types";
 import Spinner from "../Spinner/Spinner";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/types";
+import { FC } from "react";
 
-const OrderDetails = (props) => {
+const OrderDetails: FC = (props: any) => {
   const isLoading = useSelector((store) => store.orderDetailsReducer.isLoading);
   const error = useSelector((store) => store.orderDetailsReducer.error);
   return (
@@ -21,7 +22,7 @@ const OrderDetails = (props) => {
           <p className="text text_type_main-medium mt-8 mb-15">
             идентификатор заказа
           </p>
-          <img className={styles.orderImage} src={doneOrder}></img>
+          <img className={styles.orderImage} src={doneOrder} alt="done"></img>
           <p className="text text_type_main-small mt-15 mb-2">
             Ваш заказ начали готовить
           </p>

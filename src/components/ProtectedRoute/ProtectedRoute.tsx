@@ -1,7 +1,12 @@
-import { useSelector } from "react-redux";
+import { FC } from "react";
 import { Redirect, Route, useLocation } from "react-router-dom";
+import { useSelector } from "../../utils/types";
 
-const ProtectedRoute = ({ children, ...rest }) => {
+interface IProtectedRoute {
+  children: React.ReactNode | undefined;
+}
+
+const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {
   const isLogedIn = useSelector((store) => store.userReducer.isLogedIn);
   const location = useLocation();
 

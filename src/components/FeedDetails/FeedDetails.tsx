@@ -19,6 +19,14 @@ interface IParams {
   id: string;
 }
 
+interface IIngredientDesc {
+  srcImage: string;
+  name: string;
+  id: string;
+  price: number;
+  type: string;
+}
+
 const FeedDetails = () => {
   const params = useParams<IParams>();
   const history = useHistory();
@@ -96,7 +104,7 @@ const FeedDetails = () => {
       uniqueIngredientIds.map((ingredientId) => {
         const { image_mobile, name, price, type } = ingredients.find(
           (item) => item._id === ingredientId
-        );
+        ) as TIngredientItem;
         return {
           srcImage: image_mobile,
           name: name,
@@ -108,9 +116,9 @@ const FeedDetails = () => {
     [uniqueIngredientIds, ingredients]
   );
 
-  const quantityOfIngredient = (ingredient: TIngredientItem) => {
+  const quantityOfIngredient = (ingredient: IIngredientDesc) => {
     return currentOrder?.ingredients.filter((item) => {
-      return item === ingredient._id;
+      return item === ingredient.id;
     }).length;
   };
 
