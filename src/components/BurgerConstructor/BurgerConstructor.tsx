@@ -18,6 +18,7 @@ import {
 } from "../../services/actions/actions";
 import BurgerConstructorAddedItem from "../BurgerConstructorAddedItem/BurgerConstructorAddedItem";
 import { getCookie } from "../../utils/helpers";
+import { TIngredientItem } from "../BurgerIngredients/types";
 
 const BurgerConstructor: FC = () => {
   const history = useHistory();
@@ -99,7 +100,7 @@ const BurgerConstructor: FC = () => {
 
   const prepareIngredientsId = useMemo(
     () =>
-      ingredients.map((ingredient: any) => {
+      ingredients.map((ingredient: TIngredientItem) => {
         return ingredient._id;
       }),
     [ingredients]
