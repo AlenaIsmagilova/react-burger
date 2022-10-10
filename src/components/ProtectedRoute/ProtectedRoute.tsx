@@ -4,6 +4,8 @@ import { useSelector } from "../../utils/types";
 
 interface IProtectedRoute {
   children: React.ReactNode | undefined;
+  path: string;
+  exact?: boolean;
 }
 
 const ProtectedRoute: FC<IProtectedRoute> = ({ children, ...rest }) => {

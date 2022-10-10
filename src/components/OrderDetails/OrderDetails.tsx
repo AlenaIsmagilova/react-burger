@@ -4,8 +4,13 @@ import PropTypes from "prop-types";
 import Spinner from "../Spinner/Spinner";
 import { useSelector } from "../../utils/types";
 import { FC } from "react";
+import { TIngredientItem } from "../BurgerIngredients/types";
 
-const OrderDetails: FC = (props: any) => {
+interface IOrderDetails {
+  orderNumber: number;
+}
+
+const OrderDetails: FC<IOrderDetails> = (props) => {
   const isLoading = useSelector((store) => store.orderDetailsReducer.isLoading);
   const error = useSelector((store) => store.orderDetailsReducer.error);
   return (
@@ -37,8 +42,8 @@ const OrderDetails: FC = (props: any) => {
   );
 };
 
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number,
-};
+// OrderDetails.propTypes = {
+//   orderNumber: PropTypes.number,
+// };
 
 export default OrderDetails;

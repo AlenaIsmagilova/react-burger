@@ -55,12 +55,12 @@ const BurgerIngredients = () => {
   const tabsBlockEl = useRef<HTMLDivElement>(null);
 
   const tabsBlockOnScroll = () =>
-    tabsBlockEl.current?.getBoundingClientRect().bottom;
+    tabsBlockEl.current!.getBoundingClientRect().bottom;
 
-  const bunScroll = () => bunDivEl.current?.getBoundingClientRect().top;
-  const mainScroll = () => mainDivEl.current?.getBoundingClientRect().top;
+  const bunScroll = () => bunDivEl.current!.getBoundingClientRect().top;
+  const mainScroll = () => mainDivEl.current!.getBoundingClientRect().top;
   const sauceScroll = () =>
-    sauceDivEl.current?.getBoundingClientRect().top - 30;
+    sauceDivEl.current!.getBoundingClientRect().top - 30;
 
   const handleScroll = () => {
     if (tabsBlockOnScroll() > bunScroll()) {

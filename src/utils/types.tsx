@@ -67,5 +67,15 @@ export type AppThunk<TReturn = void> = ActionCreator<
 >;
 
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();
+
+export interface ILocation {
+  background: string | undefined;
+}
+
+export interface IHistoryLocation {
+  action: string;
+  goBack: () => void;
+}
 
 // export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();

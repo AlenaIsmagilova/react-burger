@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import {
@@ -12,7 +12,8 @@ import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import styles from "../../index.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "../../utils/types";
+import { useSelector } from "../../utils/types";
 import { getBurgerIngredientsItems } from "../../services/actions/actions";
 import SignUp from "../../pages/SignUp/SignUp";
 import SignIn from "../../pages/SignIn/SignIn";
@@ -22,7 +23,7 @@ import Profile from "../../pages/Profile/Profile";
 import { authUser } from "../../services/actions/authActions";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import Modal from "../Modal/Modal.tsx";
+import Modal from "../Modal/Modal";
 import {
   SET_INGREDIENTS_MODAL_INACTIVE,
   SET_ORDER_MODAL_INACTIVE,
@@ -33,10 +34,11 @@ import FeedDetails from "../FeedDetails/FeedDetails";
 import Orders from "../../pages/Profile/Orders";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Spinner from "../Spinner/Spinner";
+import { ILocation, IHistoryLocation } from "../../utils/types";
 
-const App = () => {
+const App: FC = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useHistory<IHistoryLocation>();
 
   const orderModalActive = useSelector(
     (store) => store.burgerIngredientsReducer.isOrderModalOpen
@@ -47,7 +49,7 @@ const App = () => {
   const currentIngredient = useSelector(
     (store) => store.ingredientsItemReducer.currentIngredient
   );
-  const location = useLocation();
+  const location = useLocation<ILocation>();
   let background = location.state?.background;
 
   const { isLoading: userLoader } = useSelector((store) => store.userReducer);

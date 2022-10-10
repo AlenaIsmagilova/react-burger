@@ -8,10 +8,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TIngredient } from "../BurgerConstructor/types";
 import { useLocation, Link } from "react-router-dom";
+import { TIngredientItem } from "../BurgerIngredients/types";
 
 interface IBurgerIngredientCardProps {
-  ingredient: TIngredient;
-  openModal: (ingredient: TIngredient) => void;
+  ingredient: TIngredientItem;
+  openModal: (ingredient: TIngredientItem) => void;
 }
 
 const BurgerIngredientCard: FC<IBurgerIngredientCardProps> = ({

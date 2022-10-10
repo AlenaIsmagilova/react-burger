@@ -10,8 +10,9 @@ const modalRoot = document.getElementById("react-modals") as HTMLElement;
 
 interface IModalProps {
   handleClose: () => void;
-  title: string;
+  title?: string;
   children: React.ReactNode | undefined;
+  open?: boolean;
 }
 
 const Modal: FC<IModalProps> = ({ children, handleClose, title }) => {

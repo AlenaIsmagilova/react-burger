@@ -162,7 +162,9 @@ export type TActions =
 
 //санки(фишка санок в том, что он не возвращает объект экшенов, а возвращает функцию,
 //в аргументе которой диспатч - это дает возможность диспатчить экшены(объекты) в разных местах. при запросе/ошибке/при ответе)
-export const getBurgerIngredientsItems: AppThunk = (ingredients: any) => {
+export const getBurgerIngredientsItems: AppThunk = (
+  ingredients: TIngredientItem[]
+) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
@@ -183,7 +185,10 @@ export const getBurgerIngredientsItems: AppThunk = (ingredients: any) => {
   };
 };
 
-export const getOrderDetails: AppThunk = (ingredientsId: any, token: any) => {
+export const getOrderDetails: AppThunk = (
+  ingredientsId: string,
+  token: string
+) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_ORDER_DETAILS_REQUEST,

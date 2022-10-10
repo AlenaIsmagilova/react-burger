@@ -7,7 +7,9 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/types";
+import { useSelector } from "../../utils/types";
 import { getOrderDetails } from "../../services/actions/actions";
 import {
   RESET_ORDER_DETAILS,
@@ -23,17 +25,15 @@ import { TIngredientItem } from "../BurgerIngredients/types";
 const BurgerConstructor: FC = () => {
   const history = useHistory();
   const accessToken = getCookie("accessToken");
-  const currentIngredientInBurger: any = useSelector<any>(
+  const currentIngredientInBurger = useSelector(
     (store) => store.burgerConstructorReducer.currentIngredientIntoBurgerItems
   );
 
-  const currentBunInBurger: any = useSelector<any>(
+  const currentBunInBurger = useSelector(
     (store) => store.burgerConstructorReducer.bunInrgedientsOnly
   );
 
-  const userIsLogedIn: any = useSelector<any>(
-    (store) => store.userReducer.isLogedIn
-  );
+  const userIsLogedIn = useSelector((store) => store.userReducer.isLogedIn);
 
   const handleTotalPrice = () => {
     let totalCostBuns = 0;
@@ -62,13 +62,13 @@ const BurgerConstructor: FC = () => {
         canDrop: monitor.canDrop(),
       };
     },
-    drop: (ingredient) => {
+    drop: (ingredient: TIngredientItem) => {
       addIngredientsInBurger(ingredient);
       addBunInBurger(ingredient);
     },
   });
 
-  const addIngredientsInBurger = (ingredient: any) => {
+  const addIngredientsInBurger = (ingredient: TIngredientItem) => {
     if (ingredient.type === "sauce" || ingredient.type === "main") {
       dispatch({
         type: ADD_INGREDIENT_IN_BURGER,
@@ -77,7 +77,7 @@ const BurgerConstructor: FC = () => {
     }
   };
 
-  const addBunInBurger = (ingredient: any) => {
+  const addBunInBurger = (ingredient: TIngredientItem) => {
     if (ingredient.type === "bun") {
       dispatch({
         type: ADD_BUN_IN_BURGER,
@@ -86,15 +86,13 @@ const BurgerConstructor: FC = () => {
     }
   };
 
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
-  const { currentIngredientIntoBurgerItems }: any = useSelector<any>(
-    (store) => {
-      return store.burgerConstructorReducer;
-    }
-  );
+  const { currentIngredientIntoBurgerItems } = useSelector((store) => {
+    return store.burgerConstructorReducer;
+  });
 
-  const ingredients: any = useSelector<{ [key: string]: any }>(
+  const ingredients = useSelector(
     (store) => store.burgerIngredientsReducer.ingredientItems
   );
 
@@ -116,7 +114,7 @@ const BurgerConstructor: FC = () => {
     }
   };
 
-  const handleDeleteIngredient = (ingredient: any) => {
+  const handleDeleteIngredient = (ingredient: TIngredientItem) => {
     dispatch({ type: DELETE_INGREDIENT_IN_BURGER, payload: ingredient });
   };
 
