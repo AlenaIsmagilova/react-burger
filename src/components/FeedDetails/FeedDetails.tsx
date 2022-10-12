@@ -13,7 +13,6 @@ import styles from "../FeedDetails/FeedDetails.module.css";
 import { wsActions } from "../../services/actions/wsActions";
 import { getCookie } from "../../utils/helpers";
 import { TIngredientItem } from "../BurgerIngredients/types";
-import { TIngredient } from "../BurgerConstructor/types";
 
 interface IParams {
   id: string;

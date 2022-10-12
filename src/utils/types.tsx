@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { store } from "../index";
 import { ThunkAction } from "redux-thunk";
 import {
@@ -10,23 +9,25 @@ import { Action, ActionCreator } from "redux";
 import { TWsActions } from "../services/actions/wsActions";
 import { TActions } from "../services/actions/actions";
 import { TAuthActions } from "../services/actions/authActions";
+import { Location } from "history";
 
-const ingredientType = PropTypes.shape({
-  _id: PropTypes.string,
-  name: PropTypes.string,
-  type: PropTypes.string,
-  proteins: PropTypes.number,
-  fat: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  calories: PropTypes.number,
-  price: PropTypes.number,
-  image: PropTypes.string,
-  image_mobile: PropTypes.string,
-  image_large: PropTypes.string,
-  __v: PropTypes.number,
-});
-
-export default ingredientType;
+export type TIngredient = {
+  readonly _id: string;
+  readonly name: string;
+  readonly type: string;
+  readonly proteins: number;
+  readonly fat: number;
+  readonly carbohydrates: number;
+  readonly calories: number;
+  readonly price: number;
+  readonly image: string;
+  readonly image_mobile: string;
+  readonly image_large: string;
+  readonly __v: number;
+  onlyFrontId?: number;
+  dragIndex: number;
+  hoverIndex: number;
+};
 
 export type TUser = {
   readonly email: string;
@@ -70,7 +71,8 @@ export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();
 
 export interface ILocation {
-  background: string | undefined;
+  background: Location;
+  from: string;
 }
 
 export interface IHistoryLocation {
@@ -78,4 +80,26 @@ export interface IHistoryLocation {
   goBack: () => void;
 }
 
-// export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();
+export interface IRegisterForm {
+  email: string;
+  password: string;
+}
+
+export interface ISignUpForm extends IRegisterForm {
+  name: string;
+}
+
+export interface IResetPassword {
+  token: string;
+  password: string;
+}
+
+export type TWsSocketMiddlewareActions = {
+  wsStart: string;
+  wsError: string;
+  wsSuccess: string;
+  wsClosed: string;
+  wsGetMessage: string;
+  wsWithTokenStart: string;
+  wsWithTokenGetMessage: string;
+};

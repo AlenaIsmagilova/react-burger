@@ -7,7 +7,6 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
-// import { useDispatch } from "react-redux";
 import { useDispatch } from "../../utils/types";
 import { useSelector } from "../../utils/types";
 import { getOrderDetails } from "../../services/actions/actions";

@@ -1,4 +1,11 @@
-import { AppDispatch, AppThunk, TLoginUser, TUser } from "../../utils/types";
+import {
+  AppDispatch,
+  AppThunk,
+  IRegisterForm,
+  ISignUpForm,
+  TLoginUser,
+  TUser,
+} from "../../utils/types";
 import {
   signInApi,
   signUpApi,
@@ -92,7 +99,7 @@ export type TAuthActions =
   | IUpdateUserSuccess
   | IUpdateUserFailed;
 
-export const signIn: AppThunk = (form: any) => {
+export const signIn: AppThunk = (form: IRegisterForm) => {
   return function (dispatch: AppDispatch) {
     dispatch({ type: LOGIN_REQUEST });
     return signInApi(form)
@@ -110,7 +117,7 @@ export const signIn: AppThunk = (form: any) => {
   };
 };
 
-export const signUp: AppThunk = (form: any) => {
+export const signUp: AppThunk = (form: ISignUpForm) => {
   return function (dispatch: AppDispatch) {
     dispatch({ type: REGISTER_REQUEST });
     return signUpApi(form)

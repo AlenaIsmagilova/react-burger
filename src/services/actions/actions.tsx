@@ -1,4 +1,4 @@
-import { TIngredient } from "../../components/BurgerConstructor/types";
+import { TIngredient } from "../../utils/types";
 import { TIngredientItem as TIngredientItem } from "../../components/BurgerIngredients/types";
 import { getBurgerData } from "../../utils/api/api";
 import { createOrderApi } from "../../utils/api/apiOrders";

@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { MOVE_INGREDIENTS } from "../../services/actions/actions";
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
-import { TIngredient } from "../BurgerConstructor/types";
+import { TIngredient } from "../../utils/types";
 
 interface IBurgerConstructorAddedItem {
   handleClose: () => void;

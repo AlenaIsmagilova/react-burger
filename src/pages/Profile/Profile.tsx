@@ -3,14 +3,15 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "../../utils/types";
+import { useSelector } from "../../utils/types";
 import { NavLink, useHistory } from "react-router-dom";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { logOut, updateUser } from "../../services/actions/authActions";
 import styles from "../Profile/Profile.module.css";
 import { useForm } from "../../hooks/useForm";
 
-const Profile = () => {
+const Profile: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const refreshToken = useSelector((store) => store.userReducer.refreshToken);
@@ -36,17 +37,17 @@ const Profile = () => {
     }
   }, [isLogedIn, history]);
 
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     e.preventDefault();
     dispatch(logOut(refreshToken));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     dispatch(updateUser(values));
   };
 
-  const handleResetForm = (e) => {
+  const handleResetForm = (e: any) => {
     e.preventDefault();
     setValues({ ...values, name, email });
   };
@@ -89,7 +90,7 @@ const Profile = () => {
           <div className="inputWrapper mb-6">
             <Input
               type={"text"}
-              value={values.name}
+              value={values.name!}
               name="name"
               onChange={handleChange}
               placeholder={"Имя"}
@@ -98,7 +99,7 @@ const Profile = () => {
           </div>
           <div className="mb-6 inputWrapper">
             <EmailInput
-              value={values.email}
+              value={values.email!}
               name="email"
               onChange={handleChange}
             />
@@ -106,7 +107,7 @@ const Profile = () => {
           <div className="mb-6 inputWrapper">
             <Input
               type={"password"}
-              value={values.password}
+              value={values.password!}
               name="password"
               onChange={handleChange}
               placeholder={"Пароль"}
@@ -114,10 +115,20 @@ const Profile = () => {
             />
           </div>
           <div className={styles.buttonsContainer}>
-            <Button type="secondary" size="small" onClick={handleResetForm}>
+            <Button
+              type="secondary"
+              size="small"
+              onClick={handleResetForm}
+              htmlType="button"
+            >
               Отмена
             </Button>
-            <Button type="primary" size="small" onClick={handleSubmit}>
+            <Button
+              type="primary"
+              size="small"
+              onClick={handleSubmit}
+              htmlType="button"
+            >
               Сохранить
             </Button>
           </div>

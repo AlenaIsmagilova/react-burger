@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { FC } from "react";
 import styles from "../ModalOverlay/ModalOverlay.module.css";
 
@@ -15,10 +14,5 @@ const ModalOverlay: FC<IModalOverlay> = ({ children, onClick, className }) => {
     </div>
   );
 };
-
-// ModalOverlay.propTypes = {
-//   onClick: PropTypes.func,
-//   children: PropTypes.element.isRequired,
-// };
 
 export default ModalOverlay;

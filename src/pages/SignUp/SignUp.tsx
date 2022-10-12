@@ -7,10 +7,11 @@ import {
 import styles from "../SignUp/SignUp.module.css";
 import { signUp } from "../../services/actions/authActions";
 import { useForm } from "../../hooks/useForm";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/types";
+import { useDispatch } from "../../utils/types";
+import { FC } from "react";
 
-const SignUp = () => {
+const SignUp: FC = () => {
   const { values, handleChange } = useForm({
     name: "",
     email: "",
@@ -19,7 +20,7 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const token = useSelector((store) => store.userReducer.accessToken);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     dispatch(signUp(values));
   };
@@ -36,7 +37,7 @@ const SignUp = () => {
           <Input
             name="name"
             onChange={handleChange}
-            value={values.name}
+            value={values.name!}
             placeholder={"Имя"}
             icon={"EditIcon"}
           />
@@ -45,20 +46,20 @@ const SignUp = () => {
           <EmailInput
             name="email"
             onChange={handleChange}
-            value={values.email}
+            value={values.email!}
           />
         </div>
         <div className="mb-6">
           <Input
             name="password"
             onChange={handleChange}
-            value={values.password}
+            value={values.password!}
             placeholder={"Пароль"}
             icon={"HideIcon"}
           />
         </div>
         <div className="mb-20">
-          <Button>Зарегистрироваться</Button>
+          <Button htmlType="button">Зарегистрироваться</Button>
         </div>
         <p className={`${styles.disc} text text_type_main-small`}>
           Уже зарегистрированы?

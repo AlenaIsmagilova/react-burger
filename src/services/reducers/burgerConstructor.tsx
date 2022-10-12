@@ -6,7 +6,7 @@ import {
   RESET_CONSTRUCTOR_AFTER_ORDER,
 } from "../actions/actions";
 import { TActions } from "../actions/actions";
-import { TIngredient } from "../../components/BurgerConstructor/types";
+import { TIngredient } from "../../utils/types";
 
 export type TState = {
   currentIngredientIntoBurgerItems: ReadonlyArray<TIngredient>;

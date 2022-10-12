@@ -1,19 +1,20 @@
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useEffect } from "react";
+import { useDispatch } from "../../utils/types";
+import { useSelector } from "../../utils/types";
 import styles from "../Profile/Orders.module.css";
 import { logOut } from "../../services/actions/authActions";
 import FeedCard from "../../components/FeedCard/FeedCard";
 import { wsActions } from "../../services/actions/wsActions";
 import { getCookie } from "../../utils/helpers";
 
-const Orders = () => {
+const Orders: FC = () => {
   const dispatch = useDispatch();
   const refreshToken = useSelector((store) => store.userReducer.refreshToken);
   const orders = useSelector((store) => store.wsReducer.ownMessages);
-  const clearToken = getCookie("accessToken").replace("Bearer ", "");
+  const clearToken = getCookie("accessToken")!.replace("Bearer ", "");
 
-  const onClick = (e) => {
+  const onClick = (e: any) => {
     e.preventDefault();
     dispatch(logOut(refreshToken));
   };

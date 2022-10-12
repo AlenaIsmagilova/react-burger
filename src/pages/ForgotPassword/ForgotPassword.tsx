@@ -3,12 +3,13 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
-import { forgotPassword } from "../../utils/api/api.js";
+import { forgotPassword } from "../../utils/api/api";
 import styles from "../ForgotPassword/ForgotPassword.module.css";
-import { useSelector } from "react-redux";
-import { useForm } from "../../hooks/useForm.js";
+import { IResetPassword, useSelector } from "../../utils/types";
+import { useForm } from "../../hooks/useForm";
+import { FC } from "react";
 
-const ForgotPassword = () => {
+const ForgotPassword: FC = () => {
   const token = useSelector((store) => store.userReducer.accessToken);
   const location = {
     pathname: "/reset-password",
@@ -18,7 +19,7 @@ const ForgotPassword = () => {
   const { values, handleChange } = useForm({ email: "" });
 
   const handleSubmit = () => {
-    forgotPassword(values);
+    forgotPassword(values as string);
   };
 
   if (token) {
@@ -31,11 +32,17 @@ const ForgotPassword = () => {
         Восстановление пароля
       </h2>
       <div className="mb-6 inputWrapper">
-        <EmailInput name="email" value={values.email} onChange={handleChange} />
+        <EmailInput
+          name="email"
+          value={values.email!}
+          onChange={handleChange}
+        />
       </div>
       <div className="mb-6">
         <Link to={location}>
-          <Button disabled={!values.email}>Восстановить</Button>
+          <Button disabled={!values.email} htmlType="button">
+            Восстановить
+          </Button>
         </Link>
       </div>
       <p className={`${styles.disc} text text_type_main-small`}>

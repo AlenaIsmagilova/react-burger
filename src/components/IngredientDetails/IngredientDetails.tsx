@@ -1,15 +1,19 @@
 import { useEffect } from "react";
 import { useSelector } from "../../utils/types";
 import { useHistory, useLocation, useParams } from "react-router-dom";
-import ingredientType from "../../utils/types";
 import styles from "../IngredientDetails/IngredientDetails.module.css";
 import { TIngredientItem } from "../BurgerIngredients/types";
+import { FC } from "react";
 
 interface IParams {
   id: string;
 }
 
-const IngredientDetails = () => {
+interface IIngredientDetailsProps {
+  currIngr?: TIngredientItem;
+}
+
+const IngredientDetails = (props: IIngredientDetailsProps) => {
   const params = useParams<IParams>();
   const ingredients = useSelector(
     (store) => store.burgerIngredientsReducer.ingredientItems
@@ -82,10 +86,6 @@ const IngredientDetails = () => {
       </div>
     </div>
   );
-};
-
-IngredientDetails.propTypes = {
-  currIngr: ingredientType,
 };
 
 export default IngredientDetails;

@@ -1,9 +1,16 @@
-const socketMiddleware = (wsActions) => {
-  return function (store) {
-    let socket = null;
+import { Dispatch } from "react";
+import { Middleware, MiddlewareAPI } from "redux";
+import { TWsSocketMiddlewareActions } from "../../utils/types";
+import { TWsActions } from "../actions/wsActions";
 
-    return function (next) {
-      return function (action) {
+const socketMiddleware = (
+  wsActions: TWsSocketMiddlewareActions
+): Middleware => {
+  return function (store: MiddlewareAPI) {
+    let socket: WebSocket | null = null;
+
+    return function (next: Dispatch<TWsActions>) {
+      return function (action: any) {
         const { dispatch } = store;
         const { type, payload } = action;
         const {

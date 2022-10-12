@@ -1,10 +1,11 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "../../utils/types";
 import styles from "../Feed/Feed.module.css";
 import FeedCard from "../../components/FeedCard/FeedCard";
 import { wsActions } from "../../services/actions/wsActions";
 
-const Feed = () => {
+const Feed: FC = () => {
   const dispatch = useDispatch();
   const orders = useSelector((store) => store.wsReducer.messages);
   const total = useSelector((store) => store.wsReducer.total);

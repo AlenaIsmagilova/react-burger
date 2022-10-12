@@ -6,9 +6,10 @@ import {
 import { useForm } from "../../hooks/useForm";
 import { resetPassword } from "../../utils/api/api";
 import styles from "../ResetPassword/ResetPassword.module.css";
-import { useSelector } from "react-redux";
+import { IResetPassword, useSelector } from "../../utils/types";
+import { FC } from "react";
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
   const token = useSelector((store) => store.userReducer.accessToken);
   const history = useHistory();
   const { values, handleChange } = useForm({
@@ -16,9 +17,9 @@ const ResetPassword = () => {
     token: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    resetPassword(values);
+    resetPassword(values as IResetPassword);
   };
 
   if (token) {
@@ -37,7 +38,7 @@ const ResetPassword = () => {
             </h2>
             <div className="mb-6 inputWrapper">
               <Input
-                value={values.password}
+                value={values.password!}
                 onChange={handleChange}
                 name="password"
                 placeholder={"Введите новый пароль"}
@@ -46,14 +47,14 @@ const ResetPassword = () => {
             </div>
             <div className="mb-6 inputWrapper">
               <Input
-                value={values.token}
+                value={values.token!}
                 onChange={handleChange}
                 name="token"
                 placeholder={"Введите код из письма"}
               />
             </div>
             <div className="mb-20">
-              <Button>Сохранить</Button>
+              <Button htmlType="button">Сохранить</Button>
             </div>
             <p className={`${styles.disc} text text_type_main-small`}>
               Вспомнили пароль?

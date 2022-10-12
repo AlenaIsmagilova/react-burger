@@ -50,11 +50,4 @@ const Modal: FC<IModalProps> = ({ children, handleClose, title }) => {
   );
 };
 
-// Modal.propTypes = {
-//   handleClose: PropTypes.func,
-//   title: PropTypes.string,
-//   open: PropTypes.bool,
-//   children: PropTypes.element.isRequired,
-// };
-
 export default Modal;

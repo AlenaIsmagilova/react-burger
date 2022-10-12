@@ -6,7 +6,6 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { TIngredient } from "../BurgerConstructor/types";
 import { useLocation, Link } from "react-router-dom";
 import { TIngredientItem } from "../BurgerIngredients/types";
 
@@ -90,10 +89,5 @@ const BurgerIngredientCard: FC<IBurgerIngredientCardProps> = ({
     </Link>
   );
 };
-
-// BurgerIngredientCard.propTypes = {
-//   ingredient: ingredientType,
-//   openModal: PropTypes.func,
-// };
 
 export default BurgerIngredientCard;

@@ -1,7 +1,6 @@
 import { forwardRef } from "react";
 import styles from "../BurgerIngredientsItem/BurgerIngredientsItem.module.css";
 import BurgerIngredientCard from "../BurgerIngredientCard/BurgerIngredientCard";
-import { TIngredient } from "../BurgerConstructor/types";
 import { TIngredientItem } from "../BurgerIngredients/types";
 
 interface IBurgerIngredientsItem {
@@ -38,11 +37,5 @@ const BurgerIngredientsItem = forwardRef<
     </>
   );
 });
-
-// BurgerIngredientsItem.propTypes = {
-//   filteredIngredients: PropTypes.array.isRequired,
-//   title: PropTypes.string,
-//   openModal: PropTypes.func,
-// };
 
 export default BurgerIngredientsItem;

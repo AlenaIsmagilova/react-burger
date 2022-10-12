@@ -10,7 +10,7 @@ import {
   TActions,
 } from "../actions/actions";
 import { TIngredientItem } from "../../components/BurgerIngredients/types";
-import { TIngredient } from "../../components/BurgerConstructor/types";
+import { TIngredient } from "../../utils/types";
 
 export type TState = {
   ingredientItems: TIngredientItem[];

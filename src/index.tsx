@@ -9,7 +9,7 @@ import {
   applyMiddleware,
 } from "redux";
 import thunk from "redux-thunk";
-import { rootReducer } from "../src/services/reducers/index.js";
+import { rootReducer } from "../src/services/reducers/index";
 import { Provider } from "react-redux";
 import socketMiddleware from "./services/middleware/socketMiddleware";
 import { wsActions } from "./services/actions/wsActions";

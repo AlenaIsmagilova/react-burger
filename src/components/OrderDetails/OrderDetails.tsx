@@ -1,10 +1,8 @@
 import styles from "../OrderDetails/OrderDetails.module.css";
 import doneOrder from "../../images/done.svg";
-import PropTypes from "prop-types";
 import Spinner from "../Spinner/Spinner";
 import { useSelector } from "../../utils/types";
 import { FC } from "react";
-import { TIngredientItem } from "../BurgerIngredients/types";
 
 interface IOrderDetails {
   orderNumber: number;
@@ -41,9 +39,5 @@ const OrderDetails: FC<IOrderDetails> = (props) => {
     </div>
   );
 };
-
-// OrderDetails.propTypes = {
-//   orderNumber: PropTypes.number,
-// };
 
 export default OrderDetails;
