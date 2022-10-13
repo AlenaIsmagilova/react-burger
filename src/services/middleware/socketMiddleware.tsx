@@ -1,6 +1,10 @@
 import { Dispatch } from "react";
 import { Middleware, MiddlewareAPI } from "redux";
-import { TWsSocketMiddlewareActions } from "../../utils/types";
+import {
+  AppDispatch,
+  RootState,
+  TWsSocketMiddlewareActions,
+} from "../../utils/types";
 import { TWsActions } from "../actions/wsActions";
 
 const socketMiddleware = (

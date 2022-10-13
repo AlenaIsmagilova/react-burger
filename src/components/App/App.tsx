@@ -57,6 +57,7 @@ const App: FC = () => {
   useEffect(() => {
     dispatch(authUser());
     dispatch(getBurgerIngredientsItems());
+    console.log("1");
   }, [dispatch]);
 
   //отправляю санки(экшн-функцию)

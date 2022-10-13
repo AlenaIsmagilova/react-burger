@@ -54,7 +54,7 @@ const ResetPassword: FC = () => {
               />
             </div>
             <div className="mb-20">
-              <Button htmlType="button">Сохранить</Button>
+              <Button htmlType="submit">Сохранить</Button>
             </div>
             <p className={`${styles.disc} text text_type_main-small`}>
               Вспомнили пароль?

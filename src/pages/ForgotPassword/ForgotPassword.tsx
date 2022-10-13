@@ -5,7 +5,7 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import { forgotPassword } from "../../utils/api/api";
 import styles from "../ForgotPassword/ForgotPassword.module.css";
-import { IResetPassword, useSelector } from "../../utils/types";
+import { useSelector } from "../../utils/types";
 import { useForm } from "../../hooks/useForm";
 import { FC } from "react";
 

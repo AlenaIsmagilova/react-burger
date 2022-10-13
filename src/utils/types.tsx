@@ -10,6 +10,7 @@ import { TWsActions } from "../services/actions/wsActions";
 import { TActions } from "../services/actions/actions";
 import { TAuthActions } from "../services/actions/authActions";
 import { Location } from "history";
+import type {} from "redux-thunk/extend-redux";
 
 export type TIngredient = {
   readonly _id: string;
@@ -68,6 +69,8 @@ export type AppThunk<TReturn = void> = ActionCreator<
 >;
 
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+// // export const useDispatch = () => AppDispatch: useAppDispatch;
+// export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();
 
 export interface ILocation {

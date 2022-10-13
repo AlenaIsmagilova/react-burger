@@ -58,7 +58,7 @@ const SignIn: FC = () => {
       </div>
 
       <div className="mb-20">
-        <Button htmlType="button">Войти</Button>
+        <Button htmlType="submit">Войти</Button>
       </div>
       <p className={`${styles.disc} text text_type_main-small mb-4`}>
         Вы — новый пользователь?

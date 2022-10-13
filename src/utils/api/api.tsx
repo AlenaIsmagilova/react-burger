@@ -17,7 +17,7 @@ export async function checkResponse(res: Response): Promise<any> {
   return Promise.reject(parsedJson);
 }
 
-export const getBurgerData = async (): Promise<any> => {
+export const getBurgerData = async () => {
   const res = await fetch(`${API.baseUrl}ingredients`);
   const data = await checkResponse(res);
 

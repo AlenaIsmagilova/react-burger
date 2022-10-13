@@ -59,7 +59,7 @@ const SignUp: FC = () => {
           />
         </div>
         <div className="mb-20">
-          <Button htmlType="button">Зарегистрироваться</Button>
+          <Button htmlType="submit">Зарегистрироваться</Button>
         </div>
         <p className={`${styles.disc} text text_type_main-small`}>
           Уже зарегистрированы?
