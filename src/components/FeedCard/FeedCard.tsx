@@ -39,9 +39,14 @@ const FeedCard: FC<IFeedCard> = ({ order }) => {
 
   const totalCost = useMemo(
     () =>
-      order?.ingredients
-        .map((id) => ingredients.find((item) => id === item._id))
-        .reduce((sum: number, current: any): number => sum + current.price, 0),
+      (
+        order?.ingredients.map((id) =>
+          ingredients.find((item) => id === item._id)
+        ) as TIngredientItem[]
+      ).reduce(
+        (sum: number, current: TIngredientItem): number => sum + current.price,
+        0
+      ),
     [ingredients, order?.ingredients]
   );
 

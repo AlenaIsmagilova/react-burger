@@ -130,12 +130,14 @@ const FeedDetails: FC = () => {
 
   const totalCost = useMemo(
     () =>
-      currentOrder?.ingredients
-        .map((id) => ingredients.find((item) => id === item._id))
-        .reduce(
-          (sum: number, current: TIngredientItem) => sum + current.price,
-          0
-        ),
+      (
+        currentOrder?.ingredients.map((id) =>
+          ingredients.find((item) => id === item._id)
+        ) as TIngredientItem[]
+      ).reduce(
+        (sum: number, current: TIngredientItem): number => sum + current.price,
+        0
+      ),
     [currentOrder?.ingredients, ingredients]
   );
 
