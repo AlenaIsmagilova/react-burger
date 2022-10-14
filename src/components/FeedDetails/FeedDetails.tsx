@@ -1,7 +1,13 @@
-import { useEffect, useMemo } from "react";
+import {
+  DetailedHTMLProps,
+  HTMLAttributes,
+  ReactNode,
+  useEffect,
+  useMemo,
+} from "react";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
-import { useSelector } from "../../utils/types";
+import { TIngredient, useSelector } from "../../utils/types";
 import {
   useHistory,
   useLocation,
@@ -13,6 +19,7 @@ import styles from "../FeedDetails/FeedDetails.module.css";
 import { wsActions } from "../../services/actions/wsActions";
 import { getCookie } from "../../utils/helpers";
 import { TIngredientItem } from "../BurgerIngredients/types";
+import { FC } from "react";
 
 interface IParams {
   id: string;
@@ -26,7 +33,7 @@ interface IIngredientDesc {
   type: string;
 }
 
-const FeedDetails = () => {
+const FeedDetails: FC = () => {
   const params = useParams<IParams>();
   const history = useHistory();
   const location = useLocation();
@@ -125,7 +132,10 @@ const FeedDetails = () => {
     () =>
       currentOrder?.ingredients
         .map((id) => ingredients.find((item) => id === item._id))
-        .reduce((sum, current: any) => sum + current.price, 0),
+        .reduce(
+          (sum: number, current: TIngredientItem) => sum + current.price,
+          0
+        ),
     [currentOrder?.ingredients, ingredients]
   );
 

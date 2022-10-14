@@ -7,7 +7,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../BurgerConstructor/BurgerConstructor.module.css";
-import { useDispatch } from "../../utils/types";
+import { TIngredient, useDispatch } from "../../utils/types";
 import { useSelector } from "../../utils/types";
 import { getOrderDetails } from "../../services/actions/actions";
 import {
@@ -40,7 +40,7 @@ const BurgerConstructor: FC = () => {
 
     if (currentIngredientInBurger.length > 0) {
       totalCostIngredients = currentIngredientInBurger.reduce(
-        (sum: any, current: any) => {
+        (sum: number, current: TIngredient) => {
           return sum + current.price;
         },
         0
@@ -151,7 +151,7 @@ const BurgerConstructor: FC = () => {
             )}
             <div className={styles.wrapperForScroll}>
               {currentIngredientIntoBurgerItems.map(
-                (ingredient: any, index: any) => (
+                (ingredient: TIngredient, index: number) => (
                   <BurgerConstructorAddedItem
                     key={ingredient.onlyFrontId}
                     item={ingredient}

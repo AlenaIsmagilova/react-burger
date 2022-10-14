@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../pages/Feed/Feed.module.css";
-import { useSelector } from "../../utils/types";
+import { TIngredient, useSelector } from "../../utils/types";
 import dayjs from "dayjs";
 import { FC, useMemo } from "react";
 import { TWsOrder } from "../../utils/types";
+import { TIngredientItem } from "../BurgerIngredients/types";
 
 interface IFeedCard {
   order: TWsOrder;
@@ -40,7 +41,7 @@ const FeedCard: FC<IFeedCard> = ({ order }) => {
     () =>
       order?.ingredients
         .map((id) => ingredients.find((item) => id === item._id))
-        .reduce((sum, current: any) => sum + current.price, 0),
+        .reduce((sum: number, current: any): number => sum + current.price, 0),
     [ingredients, order?.ingredients]
   );
 

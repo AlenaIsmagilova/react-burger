@@ -133,7 +133,7 @@ export const signUp: AppThunk = (form: ISignUpForm) => {
   };
 };
 
-export const logOut: AppThunk = (refreshToken: any) => {
+export const logOut: AppThunk = (refreshToken: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({ type: LOGOUT_REQUEST });
     return logOutApi(refreshToken)
@@ -204,7 +204,7 @@ export const authUser: AppThunk = () => {
   };
 };
 
-export const updateUser: AppThunk = (form: any) => {
+export const updateUser: AppThunk = (form: ISignUpForm) => {
   return function (dispatch: AppDispatch) {
     dispatch({ type: UPDATE_USER_REQUEST });
     return updateUserApi(form)
