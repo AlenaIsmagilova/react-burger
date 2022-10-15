@@ -10,14 +10,14 @@ import { TIngredient } from "../../utils/types";
 
 export type TState = {
   currentIngredientIntoBurgerItems: ReadonlyArray<TIngredient>;
-  bunInrgedientsOnly: TIngredient;
+  bunInrgedientsOnly: TIngredient | null;
   readonly count: number;
 };
 
 //начальное состояние
 export const initialState: TState = {
   currentIngredientIntoBurgerItems: [],
-  bunInrgedientsOnly: {} as TIngredient,
+  bunInrgedientsOnly: null,
   count: 0,
 };
 

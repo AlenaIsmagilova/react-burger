@@ -45,8 +45,8 @@ const BurgerIngredientCard: FC<IBurgerIngredientCardProps> = ({
   const setCounter = () => {
     if (
       ingredient.type === "bun" &&
-      currentBunInBurger.hasOwnProperty("type") &&
-      ingredient._id === currentBunInBurger._id
+      currentBunInBurger?.hasOwnProperty("type") &&
+      ingredient._id === currentBunInBurger?._id
     ) {
       return 2;
     }

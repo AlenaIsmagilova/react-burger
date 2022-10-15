@@ -46,8 +46,8 @@ const BurgerConstructor: FC = () => {
         0
       );
     }
-    if (currentBunInBurger._id) {
-      totalCostBuns = currentBunInBurger.price * 2;
+    if (currentBunInBurger?._id) {
+      totalCostBuns = currentBunInBurger?.price * 2;
     }
     return totalCostIngredients + totalCostBuns;
   };
@@ -125,7 +125,7 @@ const BurgerConstructor: FC = () => {
           collected.canDrop ? styles.burgerConstructorWrapperBorder : ""
         } ${`ml-8 pr-2 ${styles.burgerConstructorWrapper}`}`}
       >
-        {currentIngredientInBurger.length === 0 && !currentBunInBurger._id ? (
+        {currentIngredientInBurger.length === 0 && !currentBunInBurger?._id ? (
           <>
             <p
               className={`${styles.withoutOrderTitle} text text_type_main-medium `}
@@ -140,13 +140,13 @@ const BurgerConstructor: FC = () => {
           </>
         ) : (
           <>
-            {currentBunInBurger._id && (
+            {currentBunInBurger?._id && (
               <ConstructorElement
                 type="top"
                 isLocked={true}
-                text={currentBunInBurger.name + " (верх)"}
-                price={currentBunInBurger.price}
-                thumbnail={currentBunInBurger.image}
+                text={currentBunInBurger?.name + " (верх)"}
+                price={currentBunInBurger?.price}
+                thumbnail={currentBunInBurger?.image}
               />
             )}
             <div className={styles.wrapperForScroll}>
@@ -161,13 +161,13 @@ const BurgerConstructor: FC = () => {
                 )
               )}
             </div>
-            {currentBunInBurger._id && (
+            {currentBunInBurger?._id && (
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
-                text={currentBunInBurger.name + " (низ)"}
-                price={currentBunInBurger.price}
-                thumbnail={currentBunInBurger.image}
+                text={currentBunInBurger?.name + " (низ)"}
+                price={currentBunInBurger?.price}
+                thumbnail={currentBunInBurger?.image}
               />
             )}
             {
