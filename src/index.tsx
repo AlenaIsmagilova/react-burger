@@ -9,26 +9,24 @@ import {
   applyMiddleware,
 } from "redux";
 import thunk from "redux-thunk";
-import { rootReducer } from "../src/services/reducers/index.js";
+import { rootReducer } from "../src/services/reducers/index";
 import { Provider } from "react-redux";
 import socketMiddleware from "./services/middleware/socketMiddleware";
 import { wsActions } from "./services/actions/wsActions";
 
-const composeEnhancers =
-  typeof window === "object" &&
-  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(
-    thunk,
-    socketMiddleware(wsActions)
-    // socketMiddleware("wss://norma.nomoreparties.space/orders")
-  )
+  applyMiddleware(thunk, socketMiddleware(wsActions))
 );
 
-const store = createStore(rootReducer, enhancer);
+export const store = createStore(rootReducer, enhancer);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
