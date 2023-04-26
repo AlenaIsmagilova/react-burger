@@ -9,7 +9,3 @@
 **React**/HTML/CSS
 
 ## [Деплой](https://alenaismagilova.github.io/react-burger/)
-
-### Дополнительно
-
-Проект дорабатывается
